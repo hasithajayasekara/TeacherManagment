@@ -29,7 +29,7 @@ if(isset($_POST['btnsubmitadd']))
 	}
 	$sql2= "INSERT INTO zone(zoneid,zonename) VALUES (
 	'".mysqli_real_escape_string($connection,$zonid)."',
-	'".mysqli_real_escape_string($connection,$POST['txtzonename'])."')";
+	'".mysqli_real_escape_string($connection,$_POST['txtzonename'])."')";
 	$result2= mysqli_query($connection,$sql2) or die("Error in sql2".mysqli_error($connection,));
 	if($result2)
 	{

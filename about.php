@@ -32,7 +32,7 @@
 <td><h5><font color="#4e5c73">36</h5></font></td>
 <tr><td><h5><font color="#4e5c73">No  of  Schools  Functions</h5></font></td>
 <td><h5><font color="#4e5c73">35</h5></font></td>
-<tr><td><h5><font color="#4e5c73">Total  No  of Students in 2018</h5></font></td>
+<tr><td><h5><font color="#4e5c73">Total  No  of Students in 2025</h5></font></td>
 <td><h5><font color="#4e5c73">7854</h5></font></td>
 <tr><td><h5><font color="#4e5c73">Total  No  of Teachers & Principals</h5></font></td>
 <td><h5><font color="#4e5c73">659</h5></font></td>

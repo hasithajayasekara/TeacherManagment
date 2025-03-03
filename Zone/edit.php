@@ -17,8 +17,8 @@ if($usertype=="zone" || $usertype=="clerk")
 if(isset($_POST['btnsubmitedit']))
 {
 	$sql2= "UPDATE zone SET
-		zonename='".mysqli_real_escape_string($connection,$POST['txtzonename'])."'
-		WHERE zoneid='".mysqli_real_escape_string($connection,$POST['zonid'])."'";
+		zonename='".mysqli_real_escape_string($connection,$_POST['txtzonename'])."'
+		WHERE zoneid='".mysqli_real_escape_string($connection,$_POST['zonid'])."'";
 	$result2= mysqli_query($connection,$sql2) or die("Error in sql2".mysqli_error($connection));
 	if($result2)
 	{

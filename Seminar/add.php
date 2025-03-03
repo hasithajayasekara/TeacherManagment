@@ -28,7 +28,7 @@ if(isset($_POST['btnsubmitadd']))
 		$seminarid="SEM00001";
 	}
 	$sql2= "INSERT INTO seminar(seminarid,date,details) VALUES (
-	'".mysqli_real_escape_string($connection,$_seminarid)."',
+	'".mysqli_real_escape_string($connection,$seminarid)."',
 	'".mysqli_real_escape_string($connection,$_POST['txtdate'])."',
 	'".mysqli_real_escape_string($connection,$_POST['txtdetails'])."')";
 	$result2= mysqli_query($connection,$sql2) or die("Error in sql2".mysqli_error($connection));
@@ -40,7 +40,7 @@ if(isset($_POST['btnsubmitadd']))
 		if($_POST['txtstaffatten'.$x]=="Yes")
 		{
 		  $sql2= "INSERT INTO seminarparticipant(seminarid,staffid) VALUES (
-		  '".mysqli_real_escape_string($connection,$_seminarid)."',
+		  '".mysqli_real_escape_string($connection,$seminarid)."',
 		  '".mysqli_real_escape_string($connection,$_POST['txtstaffid'.$x])."')";
 		  $result2= mysqli_query($connection,$sql2) or die("Error in sql2".mysqli_error($connection));
 		  $submit++;

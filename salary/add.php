@@ -29,8 +29,8 @@ if($usertype=="zone" || $usertype=="clerk")
       '".mysqli_real_escape_string($connection,$_POST['txtstaffbsalary'.$x])."',
       '".mysqli_real_escape_string($connection,$_POST['txtyear'])."',
       '".mysqli_real_escape_string($connection,$_POST['txtmonth'])."',
-      '".mysqli_real_escape_string($connection,$_epf)."',
-      '".mysqli_real_escape_string($connection,$_etf)."')";
+      '".mysqli_real_escape_string($connection,$epf)."',
+      '".mysqli_real_escape_string($connection,$etf)."')";
       $result2= mysqli_query($connection,$sql2) or die("Error in sql2".mysqli_error($connection));
 
       $submit++;

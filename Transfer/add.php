@@ -35,7 +35,7 @@ if(isset($_POST['btnsubmitadd']))
 	$resultupdate=mysqli_query($connection,$sqlupdate) or die("sql error in sqlupdate ".mysqli_error($connection));
 	
 	 $sql2= "INSERT INTO staffwork(staffid,startdate,schoolid,post) VALUES (
-	  '".mysqli_real_escape_string($connection,$_staffid)."',
+	  '".mysqli_real_escape_string($connection,$staffid)."',
 	  '".mysqli_real_escape_string($connection,$_transdate)."',
 	  '".mysqli_real_escape_string($connection,$_POST['txtschool'])."',
 	  '".mysqli_real_escape_string($connection,$_POST['txtpost'])."')";

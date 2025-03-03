@@ -28,7 +28,7 @@ if(isset($_POST['btnsubmitadd']))
 		$schoolid="SCH00001";
 	}
 	$sql2= "INSERT INTO school(schoolid,censusid,name,address,tpnum,zoneid) VALUES (
-	'".mysqli_real_escape_string($connection,$_schoolid)."',
+	'".mysqli_real_escape_string($connection,$schoolid)."',
 	'".mysqli_real_escape_string($connection,$_POST['txtcensusid'])."',
 	'".mysqli_real_escape_string($connection,$_POST['txtschname'])."',
 	'".mysqli_real_escape_string($connection,$_POST['txtaddress'])."',
