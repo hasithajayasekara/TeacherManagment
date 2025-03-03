@@ -17,19 +17,19 @@ if($usertype=="zone" || $usertype=="clerk")
 if(isset($_POST['btnsubmitedit']))
 {
 	$sql2= "UPDATE office_staff SET
-				Name='".mysqli_real_escape_string($_POST['txtstfname'])."',
-				Gender='".mysqli_real_escape_string($_POST['txt_gend'])."',
-				Date_of_birth='".mysqli_real_escape_string($_POST['txttdob'])."',
-				Age='".mysqli_real_escape_string($_POST['txtage'])."',
-				NIC_number='".mysqli_real_escape_string($_POST['txtnic'])."',
-				Religion='".mysqli_real_escape_string($_POST['txtrelg'])."',
-				Nationality='".mysqli_real_escape_string($_POST['txtnation'])."',
-				Civil_status='".mysqli_real_escape_string($_POST['txtstcivel'])."',
-				Address='".mysqli_real_escape_string($_POST['txtaddress'])."',
-				Telephone_number='".mysqli_real_escape_string($_POST['txtphone'])."',
-				First_appoinment_date='".mysqli_real_escape_string($_POST['txtapdate'])."',
-				Post='".mysqli_real_escape_string($_POST['txtpost'])."'
-				WHERE SID='".mysqli_real_escape_string($_POST['txtstaffid'])."'";
+				Name='".mysqli_real_escape_string($connection,$_POST['txtstfname'])."',
+				Gender='".mysqli_real_escape_string($connection,$_POST['txt_gend'])."',
+				Date_of_birth='".mysqli_real_escape_string($connection,$_POST['txttdob'])."',
+				Age='".mysqli_real_escape_string($connection,$_POST['txtage'])."',
+				NIC_number='".mysqli_real_escape_string($connection,$_POST['txtnic'])."',
+				Religion='".mysqli_real_escape_string($connection,$_POST['txtrelg'])."',
+				Nationality='".mysqli_real_escape_string($connection,$_POST['txtnation'])."',
+				Civil_status='".mysqli_real_escape_string($connection,$_POST['txtstcivel'])."',
+				Address='".mysqli_real_escape_string($connection,$_POST['txtaddress'])."',
+				Telephone_number='".mysqli_real_escape_string($connection,$_POST['txtphone'])."',
+				First_appoinment_date='".mysqli_real_escape_string($connection,$_POST['txtapdate'])."',
+				Post='".mysqli_real_escape_string($connection,$_POST['txtpost'])."'
+				WHERE SID='".mysqli_real_escape_string($connection,$_POST['txtstaffid'])."'";
 	$result2= mysqli_query($connection,$sql2) or die("Error in sql2".mysqli_error($connection));
 	if($result2)
 	{

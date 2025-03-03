@@ -25,12 +25,12 @@ if($usertype=="zone" || $usertype=="clerk")
       $etf=($basicsalary*12)/100;
 
       $sql2= "INSERT INTO salary(staffid,netsalary,year,month,epf,etf) VALUES (
-      '".mysqli_real_escape_string($_POST['txtstaffid'.$x])."',
-      '".mysqli_real_escape_string($_POST['txtstaffbsalary'.$x])."',
-      '".mysqli_real_escape_string($_POST['txtyear'])."',
-      '".mysqli_real_escape_string($_POST['txtmonth'])."',
-      '".mysqli_real_escape_string($epf)."',
-      '".mysqli_real_escape_string($etf)."')";
+      '".mysqli_real_escape_string($connection,$_POST['txtstaffid'.$x])."',
+      '".mysqli_real_escape_string($connection,$_POST['txtstaffbsalary'.$x])."',
+      '".mysqli_real_escape_string($connection,$_POST['txtyear'])."',
+      '".mysqli_real_escape_string($connection,$_POST['txtmonth'])."',
+      '".mysqli_real_escape_string($connection,$_epf)."',
+      '".mysqli_real_escape_string($connection,$_etf)."')";
       $result2= mysqli_query($connection,$sql2) or die("Error in sql2".mysqli_error($connection));
 
       $submit++;

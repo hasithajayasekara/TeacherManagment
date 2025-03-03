@@ -17,12 +17,12 @@ if($usertype=="zone" || $usertype=="clerk")
 if(isset($_POST['btnsubmitedit']))
 {
 	$sql2= "UPDATE school SET
-		censusid='".mysqli_real_escape_string($_POST['txtcensusid'])."',
-		name='".mysqli_real_escape_string($_POST['txtschname'])."',
-		address='".mysqli_real_escape_string($_POST['txtaddress'])."',
-		tpnum='".mysqli_real_escape_string($_POST['txttpnum'])."',
-		zoneid='".mysqli_real_escape_string($_POST['txtzone'])."'
-		WHERE schoolid='".mysqli_real_escape_string($_POST['txtschoolid'])."'";
+		censusid='".mysqli_real_escape_string($connection,$_POST['txtcensusid'])."',
+		name='".mysqli_real_escape_string($connection,$_POST['txtschname'])."',
+		address='".mysqli_real_escape_string($connection,$_POST['txtaddress'])."',
+		tpnum='".mysqli_real_escape_string($connection,$_POST['txttpnum'])."',
+		zoneid='".mysqli_real_escape_string($connection,$_POST['txtzone'])."'
+		WHERE schoolid='".mysqli_real_escape_string($connection,$_POST['txtschoolid'])."'";
 	$result2= mysqli_query($connection,$sql2) or die("Error in sql2".mysqli_error($connection));
 	if($result2)
 	{

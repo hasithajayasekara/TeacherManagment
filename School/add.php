@@ -28,12 +28,12 @@ if(isset($_POST['btnsubmitadd']))
 		$schoolid="SCH00001";
 	}
 	$sql2= "INSERT INTO school(schoolid,censusid,name,address,tpnum,zoneid) VALUES (
-	'".mysqli_real_escape_string($schoolid)."',
-	'".mysqli_real_escape_string($_POST['txtcensusid'])."',
-	'".mysqli_real_escape_string($_POST['txtschname'])."',
-	'".mysqli_real_escape_string($_POST['txtaddress'])."',
-	'".mysqli_real_escape_string($_POST['txttpnum'])."',
-	'".mysqli_real_escape_string($_POST['txtzone'])."')";
+	'".mysqli_real_escape_string($connection,$_schoolid)."',
+	'".mysqli_real_escape_string($connection,$_POST['txtcensusid'])."',
+	'".mysqli_real_escape_string($connection,$_POST['txtschname'])."',
+	'".mysqli_real_escape_string($connection,$_POST['txtaddress'])."',
+	'".mysqli_real_escape_string($connection,$_POST['txttpnum'])."',
+	'".mysqli_real_escape_string($connection,$_POST['txtzone'])."')";
 	$result2= mysqli_query($connection,$sql2) or die("Error in sql2".mysqli_error($connection));
 	if($result2)
 	{

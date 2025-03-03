@@ -28,9 +28,9 @@ if(isset($_POST['btnsubmitadd']))
 		$zonid="Z00001";
 	}
 	$sql2= "INSERT INTO zone(zoneid,zonename) VALUES (
-	'".mysqli_real_escape_string($zonid)."',
-	'".mysqli_real_escape_string($_POST['txtzonename'])."')";
-	$result2= mysqli_query($connection,$sql2) or die("Error in sql2".mysqli_error($connection));
+	'".mysqli_real_escape_string($connection,$zonid)."',
+	'".mysqli_real_escape_string($connection,$POST['txtzonename'])."')";
+	$result2= mysqli_query($connection,$sql2) or die("Error in sql2".mysqli_error($connection,));
 	if($result2)
 	{
 		echo "<script> alert('Successfully Insert into Database');window.location.href='index.php'; </script>";

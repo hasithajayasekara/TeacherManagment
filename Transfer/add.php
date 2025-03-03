@@ -18,9 +18,9 @@ if(isset($_POST['btnsubmitadd']))
 {
 
 	$sql2= "INSERT INTO transfer(staffid,transferdate,schoolid) VALUES (
-	'".mysqli_real_escape_string($_POST['txtstaff'])."',
-	'".mysqli_real_escape_string($_POST['txtTransferdate'])."',
-	'".mysqli_real_escape_string($_POST['txtschool'])."')";
+	'".mysqli_real_escape_string($connection,$_POST['txtstaff'])."',
+	'".mysqli_real_escape_string($connection,$_POST['txtTransferdate'])."',
+	'".mysqli_real_escape_string($connection,$_POST['txtschool'])."')";
 	$result2= mysqli_query($connection,$sql2) or die("Error in sql2".mysqli_error($connection));
 	
 	$staffid=$_POST['txtstaff'];
@@ -35,10 +35,10 @@ if(isset($_POST['btnsubmitadd']))
 	$resultupdate=mysqli_query($connection,$sqlupdate) or die("sql error in sqlupdate ".mysqli_error($connection));
 	
 	 $sql2= "INSERT INTO staffwork(staffid,startdate,schoolid,post) VALUES (
-	  '".mysqli_real_escape_string($staffid)."',
-	  '".mysqli_real_escape_string($transdate)."',
-	  '".mysqli_real_escape_string($_POST['txtschool'])."',
-	  '".mysqli_real_escape_string($_POST['txtpost'])."')";
+	  '".mysqli_real_escape_string($connection,$_staffid)."',
+	  '".mysqli_real_escape_string($connection,$_transdate)."',
+	  '".mysqli_real_escape_string($connection,$_POST['txtschool'])."',
+	  '".mysqli_real_escape_string($connection,$_POST['txtpost'])."')";
 	  $result2= mysqli_query($connection,$sql2) or die("Error in sql2".mysqli_error($connection));
 	if($result2)
 	{

@@ -28,35 +28,35 @@ if(isset($_POST['btnsubmitadd']))
 		$stfid="SS000001";
 	}
 	$sql2= "INSERT INTO school_staff(SID,Name,Gender,Date_of_birth,Age,NIC_number,Religion,Nationality,Civil_status,Address,Telephone_number,First_appoinment_date,First_appoinment_school,Subject_teach,Post) VALUES (
-	'".mysqli_real_escape_string($stfid)."',
-	'".mysqli_real_escape_string($_POST['txtstfname'])."',
-	'".mysqli_real_escape_string($_POST['txt_gend'])."',
-	'".mysqli_real_escape_string($_POST['txttdob'])."',
-	'".mysqli_real_escape_string($_POST['txtage'])."',
-	'".mysqli_real_escape_string($_POST['txtnic'])."',
-	'".mysqli_real_escape_string($_POST['txtrelg'])."',
-	'".mysqli_real_escape_string($_POST['txtnation'])."',
-	'".mysqli_real_escape_string($_POST['txtstcivel'])."',
-	'".mysqli_real_escape_string($_POST['txtaddress'])."',
-	'".mysqli_real_escape_string($_POST['txtphone'])."',
-	'".mysqli_real_escape_string($_POST['txtapdate'])."',
-	'".mysqli_real_escape_string($_POST['txtschool'])."',
-	'".mysqli_real_escape_string($_POST['txtteach'])."',
-	'".mysqli_real_escape_string($_POST['txtpost'])."')";
+	'".mysqli_real_escape_string($connection,$stfid)."',
+	'".mysqli_real_escape_string($connection,$_POST['txtstfname'])."',
+	'".mysqli_real_escape_string($connection,$_POST['txt_gend'])."',
+	'".mysqli_real_escape_string($connection,$_POST['txttdob'])."',
+	'".mysqli_real_escape_string($connection,$_POST['txtage'])."',
+	'".mysqli_real_escape_string($connection,$_POST['txtnic'])."',
+	'".mysqli_real_escape_string($connection,$_POST['txtrelg'])."',
+	'".mysqli_real_escape_string($connection,$_POST['txtnation'])."',
+	'".mysqli_real_escape_string($connection,$_POST['txtstcivel'])."',
+	'".mysqli_real_escape_string($connection,$_POST['txtaddress'])."',
+	'".mysqli_real_escape_string($connection,$_POST['txtphone'])."',
+	'".mysqli_real_escape_string($connection,$_POST['txtapdate'])."',
+	'".mysqli_real_escape_string($connection,$_POST['txtschool'])."',
+	'".mysqli_real_escape_string($connection,$_POST['txtteach'])."',
+	'".mysqli_real_escape_string($connection,$_POST['txtpost'])."')";
 	$result2= mysqli_query($connection,$sql2) or die("Error in sql2".mysqli_error($connection));
 
   $sql2= "INSERT INTO staffwork(staffid,startdate,schoolid,post) VALUES (
-  '".mysqli_real_escape_string($stfid)."',
-  '".mysqli_real_escape_string($_POST['txtapdate'])."',
-  '".mysqli_real_escape_string($_POST['txtschool'])."',
-  '".mysqli_real_escape_string($_POST['txtpost'])."')";
+  '".mysqli_real_escape_string($connection,$stfid)."',
+  '".mysqli_real_escape_string($connection,$_POST['txtapdate'])."',
+  '".mysqli_real_escape_string($connection,$_POST['txtschool'])."',
+  '".mysqli_real_escape_string($connection,$_POST['txtpost'])."')";
   $result2= mysqli_query($connection,$sql2) or die("Error in sql2".mysqli_error($connection));
 
    $sql2= "INSERT INTO login(user_id,password,user_type,attempt) VALUES (
-  '".mysqli_real_escape_string($stfid)."',
-  '".mysqli_real_escape_string($_POST['txtnic'])."',
-  '".mysqli_real_escape_string('teach')."',
-  '".mysqli_real_escape_string('0')."')";
+  '".mysqli_real_escape_string($connection,$stfid)."',
+  '".mysqli_real_escape_string($connection,$_POST['txtnic'])."',
+  '".mysqli_real_escape_string($connection,'teach')."',
+  '".mysqli_real_escape_string($connection,'0')."')";
   $result2= mysqli_query($connection,$sql2) or die("Error in sql2".mysqli_error($connection));
 	if($result2)
 	{
