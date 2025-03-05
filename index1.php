@@ -338,10 +338,17 @@ else
 							}
 							$resultloginuser=mysqli_query($connection,$sqlloginuser)or die("Error in sql3".mysqli_error($connection));
 							$rowloginuser = mysqli_fetch_assoc($resultloginuser);
+                            // print_r($_SESSION);
+                            // print '<br>$rowloginuser = ';
+                            // print_r($rowloginuser);
+                            // print "<br>";
 							$loginname=$rowloginuser["Name"];
+
+                            // Warning: Trying to access array offset on value of type null in C:\xampp\htdocs\Teacher-management-system\index1.php on line 341
+
 						?>
                         <li>
-                             <a class="btn btn-success btn-xs btn-circle" style="width: 10px;height: 12px;"></a> <?php echo $loginname; ?>
+                             <a class="btn btn-success btn-xs btn-circle" style="width: 105px;height: 12px;"></a> <?php echo $loginname; ?>
                            
                         </li>
                        <?php
@@ -359,26 +366,21 @@ else
                     <a href="index.php" >
                         <i class="icon-table"></i> Home
                     </a>                   
-                    <!--  <a href="index.php" >
+                    <a href="index1.php" >
                         <i class="icon-table"></i> Dashboard
-                    </a>  -->
+                    </a>
                 </li>
 
 
 
                 <?php
-				if($usertype=="guest")
-				{
-					include("menu.php");
-				}
-				else if($usertype=="zone")
-				{
-					include("zonemenu.php");
-				}
-				else if($usertype=="teach")
-				{
-					include("teachmenu.php");
-				}
+                    if($usertype=="guest"){
+                        include("menu.php");
+                    }else if($usertype=="zone"){
+                        include("zonemenu.php");
+                    }else if($usertype=="teach"){
+                        include("teachmenu.php");
+                    }
 				?>
 
             </ul>
@@ -398,17 +400,96 @@ else
                     </div>
                 </div>
                   <hr />
-                 <?php
-				 if(isset($_GET["id"]))
-				 {
-					$page=base64_decode($_GET["id"]).".php";
-					include($page);
-				 }
-				 else
-				 {
-					include("home.php"); 
-				 }
-				 ?>
+                 
+
+
+                  <div class="container">
+      <div class="card-deck mb-3 text-center">
+        <div class="card mb-4 box-shadow">
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal">Free</h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1>
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>10 users included</li>
+              <li>2 GB of storage</li>
+              <li>Email support</li>
+              <li>Help center access</li>
+            </ul>
+            <button type="button" class="btn btn-lg btn-block btn-outline-primary">Sign up for free</button>
+          </div>
+        </div>
+        <div class="card mb-4 box-shadow">
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal">Pro</h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title">$15 <small class="text-muted">/ mo</small></h1>
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>0 users included</li>
+              <li>10 GB of storage</li>
+              <li>Priority email support</li>
+              <li>Help center access</li>
+            </ul>
+            <button type="button" class="btn btn-lg btn-block btn-primary">Get started</button>
+          </div>
+        </div>
+        <div class="card mb-4 box-shadow">
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal">Enterprise</h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title">$29 <small class="text-muted">/ mo</small></h1>
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>30 users included</li>
+              <li>15 GB of storage</li>
+              <li>Phone and email support</li>
+              <li>Help center access</li>
+            </ul>
+            <button type="button" class="btn btn-lg btn-block btn-primary">Contact us</button>
+          </div>
+        </div>
+      </div>
+
+      <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+          <div class="col-12 col-md">
+            <img class="mb-2" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="24" height="24">
+            <small class="d-block mb-3 text-muted">© 2017-2018</small>
+          </div>
+          <div class="col-6 col-md">
+            <h5>Features</h5>
+            <ul class="list-unstyled text-small">
+              <li><a class="text-muted" href="#">Cool stuff</a></li>
+              <li><a class="text-muted" href="#">Random feature</a></li>
+              <li><a class="text-muted" href="#">Team feature</a></li>
+              <li><a class="text-muted" href="#">Stuff for developers</a></li>
+              <li><a class="text-muted" href="#">Another one</a></li>
+              <li><a class="text-muted" href="#">Last time</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md">
+            <h5>Resources</h5>
+            <ul class="list-unstyled text-small">
+              <li><a class="text-muted" href="#">Resource</a></li>
+              <li><a class="text-muted" href="#">Resource name</a></li>
+              <li><a class="text-muted" href="#">Another resource</a></li>
+              <li><a class="text-muted" href="#">Final resource</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-md">
+            <h5>About</h5>
+            <ul class="list-unstyled text-small">
+              <li><a class="text-muted" href="#">Team</a></li>
+              <li><a class="text-muted" href="#">Locations</a></li>
+              <li><a class="text-muted" href="#">Privacy</a></li>
+              <li><a class="text-muted" href="#">Terms</a></li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+    </div>
 
                 
             </div>

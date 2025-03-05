@@ -69,6 +69,7 @@ else
 						$viewarrwork = mysqli_fetch_assoc($viewwork);
 						
 						$sqlschool="SELECT name FROM school WHERE schoolid='$viewarrwork[schoolid]'";
+						
 						$resultsch=mysqli_query($connection,$sqlschool) or die("sql error in sqlschool ".mysqli_error($connection));
 						$rowsch=mysqli_fetch_assoc($resultsch);
 						echo '<tr>';

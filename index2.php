@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 include("config.php");
 if(!isset($_SESSION))
 {
@@ -359,9 +359,9 @@ else
                     <a href="index.php" >
                         <i class="icon-table"></i> Home
                     </a>                   
-                    <!--  <a href="index.php" >
+                    <!-- <a href="index.php" >
                         <i class="icon-table"></i> Dashboard
-                    </a>  -->
+                    </a> -->
                 </li>
 
 

@@ -56,7 +56,7 @@ if(isset($_POST['btnsubmitadd']))
   <table class="table table-striped table-bordered table-hover" width="200" border="0" align="center">
 	<tr>
       <td>Zone Name</td>
-      <td><input name="txtzonename" type="text" onKeyPress="return isTextKey(event)"required class="form-control" id="txtschname" placeholder="Type School Name"></td>
+      <td><input name="txtzonename" type="text" onKeyPress="return isTextKey(event)"required class="form-control" id="txtschname" placeholder="Type Zone Name"></td>
     </tr>
     <tr>
       <td colspan="2">

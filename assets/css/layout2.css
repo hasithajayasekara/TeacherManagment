@@ -3,14 +3,55 @@
   #right {
     float: left;
   }
+
   #right {
     display: block;
-    padding: 10px;
-   border-right:1px solid rgb(216, 215, 215);
-   border-left:1px solid rgb(216, 215, 215);
-   border-bottom:1px solid rgb(216, 215, 215);
-
+  padding: 20px;
+  background-color: #f9f9f9; /* Light background color */
+  border-radius: 8px; /* Rounded corners */
+  border: 1px solid #d8d7d7; /* Lighter border color */
+  border-top: 4px solid #5cb85c; /* Top border with a green color for emphasis */
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  transition: all 0.3s ease; /* Smooth transition for hover effect */
   }
+  #right:hover {
+  transform: scale(1.02); /* Slightly enlarge the element */
+  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.2); /* More pronounced shadow on hover */
+  background-color: #ffffff; /* Lighter background on hover */
+}
+  #right .panel {
+  padding: 15px;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+#right .panel:hover {
+  transform: translateY(-5px); /* Slightly raise the panel on hover */
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15); /* Adjust shadow on hover */
+}
+#right .panel-heading {
+  background-color: #f1f1f1;
+  color: #333;
+  font-weight: bold;
+  padding: 10px 15px;
+  border-bottom: 2px solid #ddd;
+  border-radius: 5px 5px 0 0; /* Rounded top corners */
+}
+#right .panel-body {
+  padding: 15px;
+  font-size: 16px;
+  color: #555;
+  line-height: 1.5;
+}
+
+
+
+
+
+
+
+
   #left,
   #right {
     width: 20%;

@@ -440,16 +440,14 @@ font-weight: bolder;
 }
 
 /* ============== END LEFT Styles ================= */
+
+/*temp deleted*/
 #menu {
   position: relative;
   overflow: hidden;
-  /*background-color: #333;*/
-  border-right:1px solid rgb(216, 215, 215);
-   border-left:1px solid rgb(216, 215, 215);
-  background-color:#f8f8f8;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05);
-          box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05);
+  background-color: #fafafa; /* Soft background */
+  border: 1px solid #ddd; /* Light border */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 #menu,
@@ -469,37 +467,30 @@ font-weight: bolder;
   position: relative;
   display: block;
   margin: 0;
-  border-width: 0;
-  border-radius: 0;
+  border-radius: 5px; /* Rounded corners */
 }
 
 #menu > li > a {
   position: relative;
   display: block;
-  padding: 10px 15px;
-  color: #1933EC;
-  /*text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);*/
-  border-top:1px solid rgb(216, 215, 215);
-  /*-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
-          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);*/
+  padding: 12px 20px;
+  color: #333; /* Dark text color */
+  font-size: 16px;
+  font-weight: 500; /* Slightly bolder text */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transitions */
+  border-top: 1px solid #e0e0e0; /* Lighter border for separation */
 }
 
 #menu > li > a:hover,
 #menu > li > a:focus {
   color: #fff;
-  text-decoration: none;
-  background-color: #428bca;
+  background-color: #007bff; /* Blue background on hover */
   outline: none;
-}
-
-#menu > li > a .label {
-  float: right;
 }
 
 #menu > li.active > a {
   color: #fff;
-  background-color: #428bca;
-
+  background-color: #007bff; /* Highlight active item */
 }
 
 #menu > li.panel {
@@ -512,39 +503,35 @@ font-weight: bolder;
 
 #menu ul {
   padding: 5px 0 5px 15px;
-  border-top: 1px solid rgb(216, 215, 215);
-  -webkit-box-shadow: 0 1px 0px rgba(255, 255, 255, 0.05) inset;
-          box-shadow: 0 1px 0px rgba(255, 255, 255, 0.05) inset;
+  border-top: 1px solid #e0e0e0;
 }
 
 #menu ul a {
   display: block;
-  padding: 10px 0;
-  /*margin-left: 15px;*/
-   /*font-size: 12px;*/
+  padding: 10px 15px;
   font-size: 14px;
-  /*color: #000;*/
+  color: #555; /* Slightly lighter color for sub-menu items */
+  transition: background-color 0.2s ease-in-out;
+}
+
+#menu ul a:hover {
+  background-color: #f0f0f0; /* Light grey hover effect for submenus */
 }
 
 #menu .nav-header {
-  padding: 3px 15px;
-  font-size: 12px;
-  font-weight: bold;
-  color: #777;
-  text-shadow: 0 1px 0px rgba(0, 0, 0, 0.5);
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #444;
   text-transform: uppercase;
-  background: #404040;
-  border-top: 1px solid rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0 1px 0px rgba(255, 255, 255, 0.05) inset;
-          box-shadow: 0 1px 0px rgba(255, 255, 255, 0.05) inset;
+  background: #f8f8f8;
+  border-top: 1px solid #ddd;
 }
 
 #menu .nav-divider {
   height: 6px;
   margin: 0;
-  background: rgba(0, 0, 0, 0.2);
-  border-top: 1px solid rgba(255, 255, 255, 0.01);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) inset;
+  background: #e0e0e0;
 }
 
 #menu > li.active > a {
@@ -554,7 +541,7 @@ font-weight: bolder;
 #menu > li.panel.active ul > li.active > a:after {
   position: absolute;
   right: 0;
-  border-color: transparent #6e6e6e transparent transparent;
+  border-color: transparent #007bff transparent transparent;
   border-style: solid;
   border-width: 10px;
   content: "";
@@ -585,25 +572,6 @@ font-weight: bolder;
   .side-right #menu > li > a .label {
     right: auto;
   }
-  #menu:after,
-  .mini-sidebar #menu:after {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    display: block;
-    width: 0;
-    /*background: #333;*/
-    /*content: " ";*/
-    -webkit-box-shadow: 97px 1px 5px 2px rgba(0, 0, 0, 0.6);
-            box-shadow: 97px 1px 5px 2px rgba(0, 0, 0, 0.6);
-  }
-  .side-right #menu:after,
-  .side-right.mini-sidebar #menu:after {
-    -webkit-box-shadow: 3px 1px 5px 2px rgba(0, 0, 0, 0.6);
-            box-shadow: 3px 1px 5px 2px rgba(0, 0, 0, 0.6);
-  }
 }
 
 @media (min-width: 992px) {
@@ -612,18 +580,10 @@ font-weight: bolder;
   }
   #menu > li > a > i {
     display: inline;
-    font-size: 14px;
+    font-size: 16px;
   }
   #menu > li > a > .label {
     position: relative;
-  }
-  #menu:after {
-    -webkit-box-shadow: 217px 1px 5px 2px rgba(0, 0, 0, 0.6);
-            box-shadow: 217px 1px 5px 2px rgba(0, 0, 0, 0.6);
-  }
-  .mini-sidebar #menu:after {
-    -webkit-box-shadow: 97px 1px 5px 2px rgba(0, 0, 0, 0.6);
-            box-shadow: 97px 1px 5px 2px rgba(0, 0, 0, 0.6);
   }
 }
 
