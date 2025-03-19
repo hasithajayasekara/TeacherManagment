@@ -82,7 +82,7 @@ else
                 <ul class="nav navbar-top-links navbar-right">
 
                     <!-- MESSAGES SECTION -->
-                   <!-- <li class="dropdown">
+                   <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <span class="label label-success">2</span>    <i class="icon-envelope-alt"></i>&nbsp; <i class="icon-chevron-down"></i>
                         </a>
@@ -142,11 +142,11 @@ else
                             </li>
                         </ul>
 
-                    </li>-->
+                    </li>
                     <!--END MESSAGES SECTION -->
 
                     <!--TASK SECTION -->
-                   <!-- <li class="dropdown">
+                   <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <span class="label label-danger">5</span>   <i class="icon-tasks"></i>&nbsp; <i class="icon-chevron-down"></i>
                         </a>
@@ -224,11 +224,11 @@ else
                             </li>
                         </ul>
 
-                    </li>-->
+                    </li>
                     <!--END TASK SECTION -->
 
                     <!--ALERTS SECTION -->
-                   <!-- <li class="chat-panel dropdown">
+                   <li class="chat-panel dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <span class="label label-info">8</span>   <i class="icon-comments"></i>&nbsp; <i class="icon-chevron-down"></i>
                         </a>
@@ -288,12 +288,12 @@ else
                             </li>
                         </ul>
 
-                    </li>-->
+                    </li>
                     <!-- END ALERTS SECTION -->
 
                     <!--ADMIN SETTINGS SECTIONS -->
 
-                   <!-- <li class="dropdown">
+                   <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <i class="icon-user "></i>&nbsp; <i class="icon-chevron-down "></i>
                         </a>
@@ -308,7 +308,7 @@ else
                             </li>
                         </ul>
 
-                    </li>-->
+                    </li>
                     <!--END ADMIN SETTINGS -->
                 </ul>
 
@@ -402,12 +402,12 @@ else
                  <?php
 				 if(isset($_GET["id"]))
 				 {
-					$page=base64_decode($_GET["id"]).".php";
+					$page=base64_decode($_GET["id"])."home.php";
 					include($page);
 				 }
 				 else
 				 {
-					include("home.php"); 
+					include(".php"); 
 				 }
 				 ?>
 

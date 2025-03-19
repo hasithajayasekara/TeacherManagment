@@ -1,5 +1,5 @@
 <?php
-include("config.php");
+include("../config.php");
 if(!isset($_SESSION))
 {
 	session_start();
@@ -24,31 +24,33 @@ else
      <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 	<meta content="" name="description" />
 	<meta content="" name="author" />
-	<!-- GLOBAL STYLES -->
-    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.css" />
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <link rel="stylesheet" href="assets/css/theme.css" />
-    <link rel="stylesheet" href="assets/css/MoneAdmin.css" />
-    <link rel="stylesheet" href="assets/plugins/Font-Awesome/css/font-awesome.css" />
+     <!--[if IE]>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <![endif]-->
+	    <link rel="stylesheet" href="../assets/plugins/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/theme.css" />
+    <link rel="stylesheet" href="../assets/css/MoneAdmin.css" />
+    <link rel="stylesheet" href="../assets/plugins/Font-Awesome/css/font-awesome.css" />
     <!--END GLOBAL STYLES -->
 
     <!-- PAGE LEVEL STYLES -->
-    <link href="assets/css/layout2.css" rel="stylesheet" />
-       <link href="assets/plugins/flot/examples/examples.css" rel="stylesheet" />
-       <link rel="stylesheet" href="assets/plugins/timeline/timeline.css" />
-       <link href="assets/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
-        <link href="assets/css/jquery-ui.css" rel="stylesheet" />
-<link rel="stylesheet" href="assets/plugins/uniform/themes/default/css/uniform.default.css" />
-<link rel="stylesheet" href="assets/plugins/inputlimiter/jquery.inputlimiter.1.0.css" />
-<link rel="stylesheet" href="assets/plugins/chosen/chosen.min.css" />
-<link rel="stylesheet" href="assets/plugins/colorpicker/css/colorpicker.css" />
-<link rel="stylesheet" href="assets/plugins/tagsinput/jquery.tagsinput.css" />
-<link rel="stylesheet" href="assets/plugins/daterangepicker/daterangepicker-bs3.css" />
-<link rel="stylesheet" href="assets/plugins/datepicker/css/datepicker.css" />
-<link rel="stylesheet" href="assets/plugins/timepicker/css/bootstrap-timepicker.min.css" />
-<link rel="stylesheet" href="assets/plugins/switch/static/stylesheets/bootstrap-switch.css" />
-     <?php
-	include("additionalpage.php")
+    <link href="../assets/css/layout2.css" rel="stylesheet" />
+       <link href="../assets/plugins/flot/examples/examples.css" rel="stylesheet" />
+       <link rel="stylesheet" href="../assets/plugins/timeline/timeline.css" />
+       <link href="../assets/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+        <link href="../assets/css/jquery-ui.css" rel="stylesheet" />
+<link rel="stylesheet" href="../assets/plugins/uniform/themes/default/css/uniform.default.css" />
+<link rel="stylesheet" href="../assets/plugins/inputlimiter/jquery.inputlimiter.1.0.css" />
+<link rel="stylesheet" href="../assets/plugins/chosen/chosen.min.css" />
+<link rel="stylesheet" href="../assets/plugins/colorpicker/css/colorpicker.css" />
+<link rel="stylesheet" href="../assets/plugins/tagsinput/jquery.tagsinput.css" />
+<link rel="stylesheet" href="../assets/plugins/daterangepicker/daterangepicker-bs3.css" />
+<link rel="stylesheet" href="../assets/plugins/datepicker/css/datepicker.css" />
+<link rel="stylesheet" href="../assets/plugins/timepicker/css/bootstrap-timepicker.min.css" />
+<link rel="stylesheet" href="../assets/plugins/switch/static/stylesheets/bootstrap-switch.css" />
+    <?php
+	include("../additionalpage.php")
 	?>
 </head>
 
@@ -80,7 +82,7 @@ else
                 <ul class="nav navbar-top-links navbar-right">
 
                     <!-- MESSAGES SECTION -->
-                   <li class="dropdown">
+                    <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <span class="label label-success">2</span>    <i class="icon-envelope-alt"></i>&nbsp; <i class="icon-chevron-down"></i>
                         </a>
@@ -226,7 +228,7 @@ else
                     <!--END TASK SECTION -->
 
                     <!--ALERTS SECTION -->
-                    <li class="chat-panel dropdown">
+                   <li class="chat-panel dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <span class="label label-info">8</span>   <i class="icon-comments"></i>&nbsp; <i class="icon-chevron-down"></i>
                         </a>
@@ -322,7 +324,7 @@ else
             <div class="media user-media well-small">
                 
                 <br />
-                <div class="media-body">
+               <div class="media-body">
                     <h5 class="media-heading"> Welcome</h5>
                     <ul class="list-unstyled user-info">
                         <?php
@@ -334,7 +336,7 @@ else
 							}
 							else
 							{
-								$sqlloginuser='SELECT Name FROM office_staff WHERE SID="'.$_SESSION['username'].'"';
+								$sqlloginuser="SELECT Name FROM office_staff WHERE SID='$_SESSION[username]'";
 							}
 							$resultloginuser=mysqli_query($connection,$sqlloginuser)or die("Error in sql3".mysqli_error($connection));
 							$rowloginuser = mysqli_fetch_assoc($resultloginuser);
@@ -356,12 +358,11 @@ else
 
                 
                 <li class="panel active">
-                    <a href="index.php" >
+                    <a href="../index.php" >
                         <i class="icon-table"></i> Home
+	   
+                       
                     </a>                   
-                    <!-- <a href="index.php" >
-                        <i class="icon-table"></i> Dashboard
-                    </a> -->
                 </li>
 
 
@@ -369,15 +370,15 @@ else
                 <?php
 				if($usertype=="guest")
 				{
-					include("menu.php");
+					include("../inside_menu.php");
 				}
-				else if($usertype=="zone")
+				else if($usertype=="zone" || $usertype=="clerk")
 				{
-					include("zonemenu.php");
+					include("../inside_zonemenu.php");
 				}
 				else if($usertype=="teach")
 				{
-					include("teachmenu.php");
+					include("../inside_teachmenu.php");
 				}
 				?>
 
@@ -420,7 +421,7 @@ else
         <div id="right">
 
             <?php
-			include("right.php");
+			include("../right.php");
 			?>
           
             
@@ -437,66 +438,60 @@ else
         <p>&copy;  Teacher Management System &nbsp;<?php echo date("Y"); ?> &nbsp;</p>
     </div>
     <!--END FOOTER -->
-	  <!-- GLOBAL SCRIPTS -->
-    <script src="assets/plugins/jquery-2.0.3.min.js"></script>
-     <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+
+
+      <!-- GLOBAL SCRIPTS -->
+    <script src="../assets/plugins/jquery-2.0.3.min.js"></script>
+     <script src="../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <!-- END GLOBAL SCRIPTS -->
 
     <!-- PAGE LEVEL SCRIPTS -->
-    <script src="assets/plugins/flot/jquery.flot.js"></script>
-    <script src="assets/plugins/flot/jquery.flot.resize.js"></script>
-    <script src="assets/plugins/flot/jquery.flot.time.js"></script>
-     <script  src="assets/plugins/flot/jquery.flot.stack.js"></script>
-    <script src="assets/js/for_index.js"></script>
+    <script src="../assets/plugins/flot/jquery.flot.js"></script>
+    <script src="../assets/plugins/flot/jquery.flot.resize.js"></script>
+    <script src="../assets/plugins/flot/jquery.flot.time.js"></script>
+     <script  src="../assets/plugins/flot/jquery.flot.stack.js"></script>
+    <script src="../assets/js/for_index.js"></script>
    
     <!-- END PAGE LEVEL SCRIPTS -->
 
 
  <!-- GLOBAL SCRIPTS -->
-    <script src="assets/plugins/jquery-2.0.3.min.js"></script>
-     <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <script src="../assets/plugins/jquery-2.0.3.min.js"></script>
+     <script src="../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <!-- END GLOBAL SCRIPTS -->
         <!-- PAGE LEVEL SCRIPTS -->
-    <script src="assets/plugins/dataTables/jquery.dataTables.js"></script>
-    <script src="assets/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <script src="../assets/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="../assets/plugins/dataTables/dataTables.bootstrap.js"></script>
      <script>
          $(document).ready(function () {
              $('#dataTables-example').dataTable();
          });
     </script>
-	<script>
-         $(document).ready(function () {
-             $('#dataTables-example1').dataTable();
-         });
-    </script>
-	<script>
-         $(document).ready(function () {
-             $('#dataTables-example2').dataTable();
-         });
-    </script>
      <!-- END PAGE LEVEL SCRIPTS -->
       <!-- PAGE LEVEL SCRIPT-->
- <script src="assets/js/jquery-ui.min.js"></script>
- <script src="assets/plugins/uniform/jquery.uniform.min.js"></script>
-<script src="assets/plugins/inputlimiter/jquery.inputlimiter.1.3.1.min.js"></script>
-<script src="assets/plugins/chosen/chosen.jquery.min.js"></script>
-<script src="assets/plugins/colorpicker/js/bootstrap-colorpicker.js"></script>
-<script src="assets/plugins/tagsinput/jquery.tagsinput.min.js"></script>
-<script src="assets/plugins/validVal/js/jquery.validVal.min.js"></script>
-<script src="assets/plugins/daterangepicker/daterangepicker.js"></script>
-<script src="assets/plugins/daterangepicker/moment.min.js"></script>
-<script src="assets/plugins/datepicker/js/bootstrap-datepicker.js"></script>
-<script src="assets/plugins/timepicker/js/bootstrap-timepicker.min.js"></script>
-<script src="assets/plugins/switch/static/js/bootstrap-switch.min.js"></script>
-<script src="assets/plugins/jquery.dualListbox-1.3/jquery.dualListBox-1.3.min.js"></script>
-<script src="assets/plugins/autosize/jquery.autosize.min.js"></script>
-<script src="assets/plugins/jasny/js/bootstrap-inputmask.js"></script>
-       <script src="assets/js/formsInit.js"></script>
+ <script src="../assets/js/jquery-ui.min.js"></script>
+ <script src="../assets/plugins/uniform/jquery.uniform.min.js"></script>
+<script src="../assets/plugins/inputlimiter/jquery.inputlimiter.1.3.1.min.js"></script>
+<script src="../assets/plugins/chosen/chosen.jquery.min.js"></script>
+<script src="../assets/plugins/colorpicker/js/bootstrap-colorpicker.js"></script>
+<script src="../assets/plugins/tagsinput/jquery.tagsinput.min.js"></script>
+<script src="../assets/plugins/validVal/js/jquery.validVal.min.js"></script>
+<script src="../assets/plugins/daterangepicker/daterangepicker.js"></script>
+<script src="../assets/plugins/daterangepicker/moment.min.js"></script>
+<script src="../assets/plugins/datepicker/js/bootstrap-datepicker.js"></script>
+<script src="../assets/plugins/timepicker/js/bootstrap-timepicker.min.js"></script>
+<script src="../assets/plugins/switch/static/js/bootstrap-switch.min.js"></script>
+<script src="../assets/plugins/jquery.dualListbox-1.3/jquery.dualListBox-1.3.min.js"></script>
+<script src="../assets/plugins/autosize/jquery.autosize.min.js"></script>
+<script src="../assets/plugins/jasny/js/bootstrap-inputmask.js"></script>
+       <script src="../assets/js/formsInit.js"></script>
         <script>
             $(function () { formInit(); });
         </script>
+   
+    <!-- END PAGE LEVEL SCRIPTS -->
 
 
 </body>
