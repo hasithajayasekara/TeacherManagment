@@ -26,7 +26,7 @@ if ($usertype == "zone" || $usertype == "clerk") {
     } else {
       $stfid = "SS000001";
     }
-    $sql2 = "INSERT INTO school_staff(SID,Name,Gender,Date_of_birth,Age,NIC_number,Religion,Nationality,Civil_status,Address,Telephone_number,First_appoinment_date,First_appoinment_school,Subject_teach,Post) VALUES (
+    $sql2 = "INSERT INTO school_staff(SID,Name,Gender,Date_of_birth,Age,NIC_number,Religion,Nationality,Civil_status,Address,Telephone_number,First_appoinment_date,First_appoinment_school,Subject_teach,Post,Email_Address) VALUES (
 	'" . mysqli_real_escape_string($connection, $stfid) . "',
 	'" . mysqli_real_escape_string($connection, $_POST['txtstfname']) . "',
 	'" . mysqli_real_escape_string($connection, $_POST['txt_gend']) . "',
@@ -41,7 +41,9 @@ if ($usertype == "zone" || $usertype == "clerk") {
 	'" . mysqli_real_escape_string($connection, $_POST['txtapdate']) . "',
 	'" . mysqli_real_escape_string($connection, $_POST['txtschool']) . "',
 	'" . mysqli_real_escape_string($connection, $_POST['txtteach']) . "',
-	'" . mysqli_real_escape_string($connection, $_POST['txtpost']) . "')";
+	'" . mysqli_real_escape_string($connection, $_POST['txtpost']) . "')',
+  '" . mysqli_real_escape_string($connection, $_POST['emailaddress']) . "')";
+
     $result2 = mysqli_query($connection, $sql2) or die("Error in sql2" . mysqli_error($connection));
 
     $sql2 = "INSERT INTO staffwork(staffid,startdate,schoolid,post) VALUES (
