@@ -74,7 +74,7 @@ else
                 <header class="navbar-header">
 
                     <a href="index.php" class="navbar-brand">
-                    Teacher Management System
+                    <!-- Teacher Management System -->
                         
                         </a>
                 </header>

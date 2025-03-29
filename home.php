@@ -1,110 +1,267 @@
 <?php
-$sqlschool="SELECT schoolid FROM school";
-$resultschool=mysqli_query($connection,$sqlschool) or die("sql error in sqlschool");
-$numschool=mysqli_num_rows($resultschool);
+$sqlschool = "SELECT schoolid FROM school";
+$resultschool = mysqli_query($connection, $sqlschool) or die("SQL error in sqlschool");
+$numschool = mysqli_num_rows($resultschool);
 
-$sqlstafffemale="SELECT SID FROM school_staff WHERE Gender='Female'";
-$resultstafffemale=mysqli_query($connection,$sqlstafffemale) or die("sql error in sqlstafffemale");
-$numsstafffemale=mysqli_num_rows($resultstafffemale);
+$sqlstafffemale = "SELECT SID FROM school_staff WHERE Gender='Female'";
+$resultstafffemale = mysqli_query($connection, $sqlstafffemale) or die("SQL error in sqlstafffemale");
+$numsstafffemale = mysqli_num_rows($resultstafffemale);
 
-$sqlstaffmale="SELECT SID FROM school_staff WHERE Gender='Male'";
-$resultstaffmale=mysqli_query($connection,$sqlstaffmale) or die("sql error in sqlstaffmale");
-$numsstaffmale=mysqli_num_rows($resultstaffmale);
+$sqlstaffmale = "SELECT SID FROM school_staff WHERE Gender='Male'";
+$resultstaffmale = mysqli_query($connection, $sqlstaffmale) or die("SQL error in sqlstaffmale");
+$numsstaffmale = mysqli_num_rows($resultstaffmale);
 
-$totalstaff=$numsstafffemale+$numsstaffmale;
+$totalstaff = $numsstafffemale + $numsstaffmale;
 
-$sqlseminar="SELECT seminarid FROM seminar";
-$resultseminar=mysqli_query($connection,$sqlseminar) or die("sql error in sqlseminar");
-$numseminar=mysqli_num_rows($resultseminar);
+$sqlseminar = "SELECT seminarid FROM seminar";
+$resultseminar = mysqli_query($connection, $sqlseminar) or die("SQL error in sqlseminar");
+$numseminar = mysqli_num_rows($resultseminar);
 ?>
-<!--BLOCK SECTION -->
-                 <div class="row">
-                    <div class="col-lg-12">
-                        <div style="text-align: center;">
-                           
-                            <a class="quick-btn" href="#">
-                                <i class="icon-check icon-2x"></i>
-                                <span> Schools</span>
-                                <span class="label label-danger"><?php echo $numschool; ?></span>
-                            </a>
 
-                            <a class="quick-btn" href="#">
-                                <i class="icon-envelope icon-2x"></i>
-                                <span>Male</span>
-                                <span class="label label-success"><?php echo $numsstaffmale; ?></span>
-                            </a>
-                            <a class="quick-btn" href="#">
-                                <i class="icon-signal icon-2x"></i>
-                                <span>Female</span>
-                                <span class="label label-warning"><?php echo $numsstafffemale; ?></span>
-                            </a>
-                            <a class="quick-btn" href="#">
-                                <i class="icon-external-link icon-2x"></i>
-                                <span>Total</span>
-                                <span class="label btn-metis-2"><?php echo $totalstaff; ?></span>
-                            </a>
-                            <a class="quick-btn" href="#">
-                                <i class="icon-lemon icon-2x"></i>
-                                <span>Seminar</span>
-                                <span class="label btn-metis-4"><?php echo $numseminar; ?></span>
-                            </a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Education Dashboard</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .dashboard-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-card {
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            height: 100%;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-card .card-body {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .stat-card .icon-wrapper {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .stat-card .count {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0.5rem 0;
+        }
+        
+        .stat-card .label {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+        
+        .section-card {
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        
+        .section-card .card-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            font-weight: 600;
+            padding: 1rem 1.5rem;
+            border-bottom: none;
+        }
+        
+        .accordion-button:not(.collapsed) {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: var(--primary-color);
+        }
+        
+        .accordion-button:focus {
+            box-shadow: none;
+            border-color: rgba(52, 152, 219, 0.25);
+        }
+        
+        .map-container {
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        @media (max-width: 768px) {
+            .stat-card {
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-header text-center">
+        <div class="container">
+            <h1 class="display-5 fw-bold">Education Management Dashboard</h1>
+            <p class="lead">Comprehensive overview of schools, staff, and activities</p>
+        </div>
+    </div>
 
-                            
-                            
+    <div class="container">
+        <!-- Stats Section -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-6 col-lg-3">
+                <div class="stat-card bg-primary text-white">
+                    <div class="card-body">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-school fa-2x"></i>
                         </div>
-
+                        <div class="count"><?php echo $numschool; ?></div>
+                        <div class="label">Schools</div>
                     </div>
-
                 </div>
-                  <!--END BLOCK SECTION -->
-                <hr />
-                   <!-- CHART & CHAT  SECTION -->
-                 <div class="row">
-                    <div class="col-lg-12">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                News
+            </div>
+            
+            <div class="col-md-6 col-lg-3">
+                <div class="stat-card bg-success text-white">
+                    <div class="card-body">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-male fa-2x"></i>
+                        </div>
+                        <div class="count"><?php echo $numsstaffmale; ?></div>
+                        <div class="label">Male Staff</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3">
+                <div class="stat-card bg-warning text-white">
+                    <div class="card-body">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-female fa-2x"></i>
+                        </div>
+                        <div class="count"><?php echo $numsstafffemale; ?></div>
+                        <div class="label">Female Staff</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3">
+                <div class="stat-card bg-info text-white">
+                    <div class="card-body">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-users fa-2x"></i>
+                        </div>
+                        <div class="count"><?php echo $totalstaff; ?></div>
+                        <div class="label">Total Staff</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3">
+                <div class="stat-card bg-secondary text-white">
+                    <div class="card-body">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-chalkboard-teacher fa-2x"></i>
+                        </div>
+                        <div class="count"><?php echo $numseminar; ?></div>
+                        <div class="label">Seminars</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- News and Map Section -->
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <div class="section-card">
+                    <div class="card-header">
+                        <i class="fas fa-newspaper me-2"></i>Latest News & Announcements
+                    </div>
+                    <div class="card-body">
+                        <div class="accordion" id="newsAccordion">
+                            <div class="accordion-item border-0 mb-2">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button rounded" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true">
+                                        <i class="fas fa-calendar-check me-2 text-primary"></i>Commencement of Work Year 2019
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#newsAccordion">
+                                    <div class="accordion-body">
+                                        <p>The official ceremony of the Commencement of Work Year 2019 was held at 9.00 am at the Ministry of Education. The event was attended by all regional directors and senior staff members.</p>
+                                        <small class="text-muted">Posted on January 15, 2019</small>
+                                    </div>
+                                </div>
                             </div>
-
-                                                
-			<div class="panel-body">
-				<div class="panel panel-primary">
-					<div class="panel-heading">
-						Commencement of Work Year 2019
-					</div>
-					<div class="panel-body">
-						The official ceremony of the Commencement of Work Year 2019 was held at 9.00 am at the Ministry of Education, Cultural Affairs, and Sports & Youth Affairs of the Northern Province under the auspices of the Mr.S.Sathiyaseelan, Secretary to the Ministry of Education. All the staff of the Ministry of Education, Department of Cultural Affairs and Zonal Education Office, Jaffna participated in this ceremony.
-
-Secretary has hoisted the National Flag in the presence of the all the staff.  Staff from Jaffna Zonal Education Office were singing the National Anthem after hoisting the National Flag
-
-After Observing two minutes silence to commemorate the war heroes and others who sacrificed their lives on behalf of the motherland, Administrative Officer of the Ministry of Education has read aloud the Oath of Public Servants.
-
-Finally the Secretary Delivered a brief speech on the necessity of ensuring the prompt, honest and unwavering contribution of all members of the staff, in the effort of creating a better tomorrow with a new economic and social order for the benefit of all Sri Lankans, as the concluding event of the programme.
-					</div>
-				</div>
-				<div class="panel panel-primary">
-					<div class="panel-heading">
-						Evolving Northern Education Data Management Practice
-					</div>
-					<div class="panel-body">
-					Data and information are very vital factors of efficient education planning, development and management processes. The earlier practice of collecting data through printed forms had its drawbacks such as delays, data losses and time consuming processing methods. Therefore a standalone digital data base was designed and the data collection was administered through compact discs which were distributed among Education Zones to enter their raw data at their offices and return in a specified time interval. Even though this method was advantageous than the earlier methods it still had several shortfalls such as technical difficulties in handling, different approaches of raw data collection from schools and processing delays. Considering these challenges it was attempted to maintain an offline locally distributed data base in two locations to which the officials should physically travel and enter data. 
-					</div>
-				</div>
-		</div>
-
+                            
+                            <div class="accordion-item border-0 mb-2">
+                                <h2 class="accordion-header" id="headingTwo">
+                                    <button class="accordion-button collapsed rounded" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                                        <i class="fas fa-database me-2 text-primary"></i>Evolving Northern Education Data Management Practice
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#newsAccordion">
+                                    <div class="accordion-body">
+                                        <p>Data and information are very vital factors of efficient education planning, development, and management. The new system will provide real-time analytics for better decision making.</p>
+                                        <small class="text-muted">Posted on March 5, 2019</small>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-12"> 
-						<div class="panel panel-primary">
-					<div class="panel-heading">
-						Provincial Education Kandy 
-					</div>
-					<div class="panel-body">
-					<iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d15829.877216097439!2d80.62816022705096!3d7.301052665688182!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1skandy+zone+office!5e0!3m2!1sen!2slk!4v1546883711502" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
-					</div>
-				</div>
-					</div>                    
+            </div>
+            
+            <div class="col-lg-6">
+                <div class="section-card">
+                    <div class="card-header">
+                        <i class="fas fa-map-marked-alt me-2"></i>Provincial Education Office Location
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="map-container">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d15829.877216097439!2d80.62816022705096!3d7.301052665688182!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1skandy+zone+office!5e0!3m2!1sen!2slk!4v1546883711502" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -392,9 +392,9 @@ if (isset($_SESSION['usertype'])) {
                 <?php
                 if (isset($_GET["id"])) {
                     $page = base64_decode($_GET["id"]) . "home.php";
-                    include($page);
+                    include('delete.php');
                 } else {
-                    include("add.php");
+                    include("home.php");
                 }
                 ?>
 

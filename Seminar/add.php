@@ -78,44 +78,169 @@ if ($usertype == "zone" || $usertype == "clerk") {
 }
 ?>
 <!doctype html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Seminar</title>
+    <title>Seminar Management | Teacher Management System</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --success-color: #28a745;
+            --info-color: #17a2b8;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+        }
+        
+        .seminar-card {
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .seminar-card .card-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.25rem 1.5rem;
+            border-bottom: none;
+        }
+        
+        .seminar-card .card-header h4 {
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .seminar-card .card-header h4 i {
+            margin-right: 10px;
+        }
+        
+        .form-control {
+            border-radius: 6px;
+            padding: 0.75rem 1rem;
+            border: 1px solid #dee2e6;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+        }
+        
+        .table-responsive {
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .table {
+            margin-bottom: 0;
+        }
+        
+        .table th {
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+            color: #6c757d;
+            border-bottom-width: 2px;
+            background-color: #f8f9fa;
+        }
+        
+        .table tr:hover {
+            background-color: rgba(52, 152, 219, 0.05);
+        }
+        
+        .btn-submit {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 0.5rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+        }
+        
+        .btn-reset {
+            background-color: var(--danger-color);
+            border: none;
+            padding: 0.5rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-reset:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+        }
+        
+        .btn-back {
+            background-color: var(--secondary-color);
+            border: none;
+            padding: 0.5rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(44, 62, 80, 0.3);
+        }
+    </style>
 </head>
 <body>
-    <form action="" method="post" name="seminar" id="seminar">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Seminar Add</div>
-                    <div class="panel-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover">
-                                <tr>
-                                    <td>Date</td>
-                                    <td><input name="txtdate" type="date" value="<?php echo date('Y-m-d'); ?>" min="<?php echo date('Y-m-d'); ?>" required class="form-control"></td>
-                                </tr>
-                                <tr>
-                                    <td>Details</td>
-                                    <td><textarea name="txtdetails" required class="form-control" placeholder="Type Details"></textarea></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">Staff Details</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <table class="table table-striped table-bordered table-hover">
+    <div class="container mt-4">
+        <div class="seminar-card">
+            <div class="card-header">
+                <h4><i class="fas fa-chalkboard-teacher me-2"></i>Add New Seminar</h4>
+            </div>
+            <div class="card-body">
+                <form action="" method="post" name="seminar" id="seminar">
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label ms-3">Date</label>
+                                <input name="txtdate" type="date" class="form-control ms-3" 
+                                       value="<?php echo date('Y-m-d'); ?>" 
+                                       min="<?php echo date('Y-m-d'); ?>" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">Details</label>
+                                <textarea name="txtdetails" required class="form-control" 
+                                          placeholder="Type seminar details"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <h5 class="mb-3"><i class="fas fa-users me-2 ms-3"></i>Staff Participants</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
                                             <tr>
-                                                <th>Staff Name</th>
-                                                <th>Participant</th>
+                                                <th width="70%">Staff Name</th>
+                                                <th width="30%">Participant</th>
                                             </tr>
+                                        </thead>
+                                        <tbody>
                                             <?php
                                             $sql1 = "SELECT SID, Name FROM school_staff";
                                             $result = mysqli_query($connection, $sql1) or die("Error in sql1" . mysqli_error($connection));
                                             $x = 1;
                                             while ($view = mysqli_fetch_assoc($result)) {
-                                                echo '<tr><td>';
+                                                echo '<tr>';
+                                                echo '<td>';
                                                 echo '<input type="hidden" value="' . $view["SID"] . '" name="txtstaffid' . $x . '" class="form-control">';
                                                 echo '<input type="text" value="' . $view["Name"] . '" name="txtstaffname' . $x . '" readonly class="form-control">';
                                                 echo '</td>';
@@ -130,24 +255,34 @@ if ($usertype == "zone" || $usertype == "clerk") {
                                             }
                                             echo '<input type="hidden" value="' . $x . '" name="txtloop" class="form-control">';
                                             ?>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <center>
-                                            <a href="index.php"><input type='button' name="gobutton" class="btn btn-success" value='Go Back'></a>
-                                            <input type="reset" name="btnreset" class="btn btn-danger" value="Reset">
-                                            <input type="submit" name="btnsubmitadd" class="btn btn-primary" value="Submit">
-                                        </center>
-                                    </td>
-                                </tr>
-                            </table>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    
+                    <div class="form-group text-center mt-4">
+                        <a href="index.php" class="btn btn-back text-white me-2">
+                            <i class="fas fa-arrow-left me-2"></i>Go Back
+                        </a>
+                        <input type="reset" name="btnreset" class="btn btn-reset me-2" value="Reset">
+                        <input type="submit" name="btnsubmitadd" class="btn btn-submit" value="Submit">
+                    </div>
+                </form>
             </div>
         </div>
-    </form>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            // Form validation can be added here if needed
+        });
+    </script>
 </body>
 </html>
