@@ -47,6 +47,7 @@ if($usertype == "zone" || $usertype == "clerk") {
             margin: 0;
             display: flex;
             align-items: center;
+            font-size: 1.95rem;
         }
         
         .school-card .card-header h4 i {
@@ -67,9 +68,9 @@ if($usertype == "zone" || $usertype == "clerk") {
         }
         
         #schoolsTable th {
-            font-weight: 600;
+            font-weight: 900;
             text-transform: uppercase;
-            font-size: 0.75rem;
+            font-size: 1.75rem;
             letter-spacing: 0.5px;
             color: #6c757d;
             border-bottom-width: 2px;

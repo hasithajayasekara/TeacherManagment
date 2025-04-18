@@ -16,5 +16,6 @@
 	{
 		die("database could not establish: ");
 	}
+
 	
 ?>

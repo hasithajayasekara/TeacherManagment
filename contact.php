@@ -25,12 +25,12 @@
   <table class="table table-striped table-bordered table-hover"  width="200" border="0" >
 
 <tr><td width="120"><B>ADDRESS:</B></td>
-<td><font color="#3333CC">Zone Education Office,<br> SITHANKENY  <br> Chankanai .
+<td><font color="#3333CC">Zone Education Office,<br> Kandy  <br> Kandy .
 </font></p></td></tr>
 
 <tr><td width="120"><B>TELEPHONE  NO:</B></td>
 <td><font color="#3333CC">+9421-2251211<br></td>
-<tr><td width="120"><B>E-MAIL:</B></td><TD><font color="#3333CC">deochankanai@gmail.com<br></font></td></tr>
+<tr><td width="120"><B>E-MAIL:</B></td><TD><font color="#3333CC">hasitha1997j@gmail.com<br></font></td></tr>
 
 </table></div></div></div></div></div>
 </body>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Teacher Feedback Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f3f3;
+      padding: 20px;
+    }
+    .container {
+      max-width: 700px;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    select, textarea, input[type="text"], input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .rating {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 5px;
+    }
+    .rating label {
+      font-weight: normal;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Teacher Feedback Form</h2>
+  <form action="submit-feedback.php" method="post">
+    <label for="studentName">Student Full Name:</label>
+    <input type="text" id="studentName" name="studentName">
+
+    <label for="teacher">Teacher's Name:</label>
+    <input type="text" id="teacher" name="teacher">
+
+    <!-- Rating Questions -->
+    <label>Clarity of Explanation:</label>
+    <div class="rating">
+      <label><input type="radio" name="clarity" value="1"> 1</label>
+      <label><input type="radio" name="clarity" value="2"> 2</label>
+      <label><input type="radio" name="clarity" value="3"> 3</label>
+      <label><input type="radio" name="clarity" value="4"> 4</label>
+      <label><input type="radio" name="clarity" value="5"> 5</label>
+    </div>
+
+    <label>Interaction with Students:</label>
+    <div class="rating">
+      <label><input type="radio" name="interaction" value="1"> 1</label>
+      <label><input type="radio" name="interaction" value="2"> 2</label>
+      <label><input type="radio" name="interaction" value="3"> 3</label>
+      <label><input type="radio" name="interaction" value="4"> 4</label>
+      <label><input type="radio" name="interaction" value="5"> 5</label>
+    </div>
+
+    <label>Overall Satisfaction:</label>
+    <div class="rating">
+      <label><input type="radio" name="satisfaction" value="1"> 1</label>
+      <label><input type="radio" name="satisfaction" value="2"> 2</label>
+      <label><input type="radio" name="satisfaction" value="3"> 3</label>
+      <label><input type="radio" name="satisfaction" value="4"> 4</label>
+      <label><input type="radio" name="satisfaction" value="5"> 5</label>
+    </div>
+
+    <label>Punctuality:</label>
+    <div class="rating">
+      <label><input type="radio" name="punctuality" value="1"> 1</label>
+      <label><input type="radio" name="punctuality" value="2"> 2</label>
+      <label><input type="radio" name="punctuality" value="3"> 3</label>
+      <label><input type="radio" name="punctuality" value="4"> 4</label>
+      <label><input type="radio" name="punctuality" value="5"> 5</label>
+    </div>
+
+    <label>Subject Knowledge:</label>
+    <div class="rating">
+      <label><input type="radio" name="knowledge" value="1"> 1</label>
+      <label><input type="radio" name="knowledge" value="2"> 2</label>
+      <label><input type="radio" name="knowledge" value="3"> 3</label>
+      <label><input type="radio" name="knowledge" value="4"> 4</label>
+      <label><input type="radio" name="knowledge" value="5"> 5</label>
+    </div>
+
+    <label>Use of Teaching Aids (Slides, Whiteboard, etc.):</label>
+    <div class="rating">
+      <label><input type="radio" name="teachingAids" value="1"> 1</label>
+      <label><input type="radio" name="teachingAids" value="2"> 2</label>
+      <label><input type="radio" name="teachingAids" value="3"> 3</label>
+      <label><input type="radio" name="teachingAids" value="4"> 4</label>
+      <label><input type="radio" name="teachingAids" value="5"> 5</label>
+    </div>
+
+    <label>Availability Outside Class:</label>
+    <div class="rating">
+      <label><input type="radio" name="availability" value="1"> 1</label>
+      <label><input type="radio" name="availability" value="2"> 2</label>
+      <label><input type="radio" name="availability" value="3"> 3</label>
+      <label><input type="radio" name="availability" value="4"> 4</label>
+      <label><input type="radio" name="availability" value="5"> 5</label>
+    </div>
+
+    <label>Encouragement & Motivation:</label>
+    <div class="rating">
+      <label><input type="radio" name="motivation" value="1"> 1</label>
+      <label><input type="radio" name="motivation" value="2"> 2</label>
+      <label><input type="radio" name="motivation" value="3"> 3</label>
+      <label><input type="radio" name="motivation" value="4"> 4</label>
+      <label><input type="radio" name="motivation" value="5"> 5</label>
+    </div>
+
+    <label for="comments">Additional Comments:</label>
+    <textarea id="comments" name="comments" rows="4"></textarea>
+
+    <input type="submit" value="Submit Feedback">
+  </form>
+</div>
+
+</body>
+</html>

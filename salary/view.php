@@ -35,23 +35,42 @@ if($usertype=="zone" || $usertype=="clerk")
 						<thead><tr><th></th><th>year</th><th>Month</th><th>Staff</th><th>Net Salary</th>
 							<th>EPF</th><th>ETF</th></tr></thead><tbody>	
 					<?php
-						$yer=base64_decode($_GET["year"]);
-						$mon=base64_decode($_GET["month"]);
-						$sql3 = "SELECT * FROM salary WHERE year='$yer' AND month='$mon'";
-						$view = mysqli_query($connection,$sql3)or die("Error in sql3".mysqli_error($connection));
-						$x=1;
-						while($viewarr = mysqli_fetch_assoc($view))
-						{
-							$sqlstaff = "SELECT name FROM school_staff WHERE SID='$viewarr[staffid]'";
-							$viewstaff = mysqli_query($connection,$sqlstaff)or die("Error in sqlstaff".mysqli_error($connection));
-							$viewarrstaff = mysqli_fetch_assoc($viewstaff);
-							echo'<tr><td>'.$x.'</td><td>'.$yer.'</td><td>'.$mon.'</td>
-							<td>'.$viewarrstaff["name"].'</td>
-							<td>'.$viewarr["netsalary"].'</td>
-							<td>'.$viewarr["epf"].'</td>
-							<td>'.$viewarr["etf"].'</td>
-							</tr>';
-							$x++;
+						// Validate and sanitize GET parameters
+						$yer = isset($_GET["year"]) ? base64_decode($_GET["year"]) : '';
+						$mon = isset($_GET["month"]) ? base64_decode($_GET["month"]) : '';
+						if (!preg_match('/^\d{4}$/', $yer)) {
+							echo '<tr><td colspan="7">Invalid year parameter.</td></tr>';
+						} elseif (!preg_match('/^(January|February|March|April|May|June|July|August|September|October|November|December)$/', $mon)) {
+							echo '<tr><td colspan="7">Invalid month parameter.</td></tr>';
+						} else {
+							// Use prepared statement to prevent SQL injection
+							$stmt = $connection->prepare("SELECT * FROM salary WHERE year=? AND month=?");
+							$stmt->bind_param("ss", $yer, $mon);
+							$stmt->execute();
+							$result = $stmt->get_result();
+							$x = 1;
+							if ($result->num_rows > 0) {
+								while ($viewarr = $result->fetch_assoc()) {
+									if ($viewarr !== null && isset($viewarr['staffid'])) {
+										$stmtstaff = $connection->prepare("SELECT name FROM school_staff WHERE SID=?");
+										$stmtstaff->bind_param("s", $viewarr['staffid']);
+										$stmtstaff->execute();
+										$resultstaff = $stmtstaff->get_result();
+										$viewarrstaff = $resultstaff->fetch_assoc();
+										$name = ($viewarrstaff !== null && isset($viewarrstaff['name'])) ? $viewarrstaff['name'] : 'Unknown Staff';
+										echo '<tr><td>' . $x . '</td><td>' . htmlspecialchars($yer) . '</td><td>' . htmlspecialchars($mon) . '</td>
+										<td>' . htmlspecialchars($name) . '</td>
+										<td>' . htmlspecialchars($viewarr["netsalary"]) . '</td>
+										<td>' . htmlspecialchars($viewarr["epf"]) . '</td>
+										<td>' . htmlspecialchars($viewarr["etf"]) . '</td>
+										</tr>';
+										$x++;
+									}
+								}
+							} else {
+								echo '<tr><td colspan="7">No salary records found for ' . htmlspecialchars($mon) . ' ' . htmlspecialchars($yer) . '.</td></tr>';
+							}
+							$stmt->close();
 						}
 					?>
 					</tbody>

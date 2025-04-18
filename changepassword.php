@@ -11,21 +11,38 @@ if(isset($_SESSION['usertype'])) {
 
 if($usertype != "guest") {
     if(isset($_POST['btnsubmit'])) {
-        $sql1 = "SELECT * FROM login WHERE user_id='$_POST[txtusername]'";
-        $result1 = mysql_query($sql1) or die("error in sql1 section:".mysql_error());
-        $row1 = mysql_fetch_assoc($result1);
-        
-        if ($row1["password"] == $_POST["txtcurrentpassword"]) {
-            if($_POST["txtnewpassword"] == $_POST["txtrenewpassword"]) {
-                $sql2 = "UPDATE login SET password='$_POST[txtnewpassword]' WHERE user_id='$_POST[txtusername]'";
-                $result2 = mysql_query($sql2) or die("error in sql2 section:".mysql_error());
-                echo "<script>alert('Your new password has been updated successfully'); window.location.href='index.php?pg=signout.php&cp';</script>";
+        $username = $_POST['txtusername'];
+        $currentPassword = $_POST['txtcurrentpassword'];
+        $newPassword = $_POST['txtnewpassword'];
+        $reNewPassword = $_POST['txtrenewpassword'];
+
+        // Prepare statement to fetch user password
+        $stmt = $connection->prepare("SELECT password FROM login WHERE user_id = ?");
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result && $row = $result->fetch_assoc()) {
+            if ($row["password"] === $currentPassword) {
+                if ($newPassword === $reNewPassword) {
+                    // Prepare statement to update password
+                    $updateStmt = $connection->prepare("UPDATE login SET password = ? WHERE user_id = ?");
+                    $updateStmt->bind_param("ss", $newPassword, $username);
+                    if ($updateStmt->execute()) {
+                        echo "<script>alert('Your new password has been updated successfully'); window.location.href='index.php?pg=signout.php&cp';</script>";
+                    } else {
+                        echo "<script>alert('Error updating password. Please try again later.');</script>";
+                    }
+                    $updateStmt->close();
+                } else {
+                    echo "<script>alert('Your new passwords do not match');</script>";
+                }
             } else {
-                echo "<script>alert('Your new passwords do not match');</script>";
+                echo "<script>alert('Your current password is incorrect');</script>";
             }
         } else {
-            echo "<script>alert('Your current password is incorrect');</script>";
+            echo "<script>alert('User not found');</script>";
         }
+        $stmt->close();
     }
 ?>
 <!DOCTYPE html>
@@ -52,14 +69,13 @@ if($usertype != "guest") {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
-        .password-card {
-            max-width: 500px;
-            margin: 2rem auto;
-            border-radius: 10px;
-            border: none;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
+    .password-card {
+        max-width: 1000px;
+        border-radius: 10px;
+        border: none;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
         
         .password-card .card-header {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));

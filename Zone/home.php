@@ -34,6 +34,7 @@ if($usertype == "zone" || $usertype == "clerk") {
             border: none;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             overflow: hidden;
+            font-size: 1.75rem;
         }
         
         .zone-card .card-header {

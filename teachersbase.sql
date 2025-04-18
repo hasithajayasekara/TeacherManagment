@@ -346,3 +346,27 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+--
+/*Feedback form submission*/
+CREATE DATABASE IF NOT EXISTS teacherbase;
+
+USE teacherbase;
+
+CREATE TABLE IF NOT EXISTS feedback (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  studentName VARCHAR(100),
+  teacher VARCHAR(100) NOT NULL,
+  clarity INT,
+  interaction INT,
+  satisfaction INT,
+  punctuality INT,
+  knowledge INT,
+  teachingAids INT,
+  availability INT,
+  motivation INT,
+  comments TEXT,
+  submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+

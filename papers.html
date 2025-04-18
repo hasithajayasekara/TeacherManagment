@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PDF Manager</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-6">
+  <div class="max-w-6xl mx-auto">
+    <h1 class="text-3xl font-bold mb-6 text-center">📘 Past Papers Manager</h1>
+
+    <!-- Upload PDF -->
+    <div class="bg-white p-4 rounded-xl shadow mb-6">
+      <h2 class="text-xl font-semibold mb-2">Upload PDF</h2>
+      <form id="uploadForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <input type="file" id="pdfFile" accept="application/pdf" required class="col-span-1" />
+        
+        <select id="mainCategory" class="border p-2 rounded" required>
+          <option value="" disabled selected>Select Grade Level</option>
+          <option value="Primary">Primary Level</option>
+          <option value="Ordinary">Ordinary Level</option>
+          <option value="Advanced">Advanced Level</option>
+        </select>
+
+        <input type="text" id="subject" placeholder="Subject (e.g. Math, Science)" class="border p-2 rounded" required />
+        <input type="text" id="grade" placeholder="Grade (e.g. Grade 5, O/L)" class="border p-2 rounded" required />
+        
+        <button type="submit" class="col-span-1 md:col-span-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+          Upload PDF
+        </button>
+      </form>
+    </div>
+
+    <!-- Table -->
+    <div class="bg-white p-4 rounded-xl shadow">
+      <h2 class="text-xl font-semibold mb-4">📄 PDF List</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full table-auto text-sm text-left">
+          <thead>
+            <tr class="bg-gray-200 text-gray-700">
+              <th class="px-4 py-2 cursor-pointer" onclick="sortTable('name')">📄 Name <span id="arrow-name"></span></th>
+              <th class="px-4 py-2 cursor-pointer" onclick="sortTable('mainCategory')">📘 Category <span id="arrow-mainCategory"></span></th>
+              <th class="px-4 py-2 cursor-pointer" onclick="sortTable('subject')">📚 Subject <span id="arrow-subject"></span></th>
+              <th class="px-4 py-2 cursor-pointer" onclick="sortTable('grade')">🎓 Grade <span id="arrow-grade"></span></th>
+              <th class="px-4 py-2">🔗 Link</th>
+            </tr>
+          </thead>
+          <tbody id="pdfTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let pdfs = JSON.parse(localStorage.getItem("edu_pdfs") || "[]");
+    let currentSort = { key: null, ascending: true };
+
+    function savePDFs() {
+      localStorage.setItem("edu_pdfs", JSON.stringify(pdfs));
+    }
+
+    function renderTable() {
+  const tbody = document.getElementById("pdfTableBody");
+  tbody.innerHTML = pdfs.map(pdf => `
+    <tr class="border-t">
+      <td class="px-4 py-2">${pdf.name}</td>
+      <td class="px-4 py-2">${pdf.mainCategory}</td>
+      <td class="px-4 py-2">${pdf.subject}</td>
+      <td class="px-4 py-2">${pdf.grade}</td>
+      <td class="px-4 py-2 flex gap-2">
+        <a href="${pdf.url}" target="_blank" class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600">View</a>
+<a href="${pdf.url}" download="${pdf.name}" class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600">Download</a>
+
+      </td>
+    </tr>
+  `).join('');
+}
+
+    function updateSortArrows() {
+      ['name', 'mainCategory', 'subject', 'grade'].forEach(field => {
+        const arrow = document.getElementById(`arrow-${field}`);
+        if (currentSort.key === field) {
+          arrow.textContent = currentSort.ascending ? '↑' : '↓';
+        } else {
+          arrow.textContent = '';
+        }
+      });
+    }
+
+    function sortTable(key) {
+      if (currentSort.key === key) {
+        currentSort.ascending = !currentSort.ascending;
+      } else {
+        currentSort.key = key;
+        currentSort.ascending = true;
+      }
+
+      const dir = currentSort.ascending ? 1 : -1;
+      pdfs.sort((a, b) => (a[key] || '').localeCompare(b[key] || '') * dir);
+
+      updateSortArrows();
+      renderTable();
+    }
+
+    document.getElementById("uploadForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const file = document.getElementById("pdfFile").files[0];
+      const mainCategory = document.getElementById("mainCategory").value;
+      const subject = document.getElementById("subject").value.trim();
+      const grade = document.getElementById("grade").value.trim();
+
+      if (!file || !mainCategory || !subject || !grade) return;
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        pdfs.push({
+          name: file.name,
+          mainCategory,
+          subject,
+          grade,
+          url: reader.result
+        });
+        savePDFs();
+        renderTable();
+        document.getElementById("uploadForm").reset();
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Init
+    updateSortArrows();
+    renderTable();
+  </script>
+</body>
+</html>

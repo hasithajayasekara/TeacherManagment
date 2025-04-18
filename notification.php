@@ -29,54 +29,56 @@ $view = mysqli_query($connection,$sql3)or die("Error in sql3".mysqli_error($conn
                     $x = 1;
                     $ida = base64_encode("add");
                     $today = date("Y-m-d");
-                    while($viewarr = mysqli_fetch_assoc($view)) {
-                        $workstart = $viewarr["startdate"];
-                        $diff = strtotime($today) - strtotime($workstart);
-                        $diffyears = floor($diff / (365*60*60*24));
-                        
-                        if($diffyears >= 5) {
-                            $sqlstaff = "SELECT Name FROM school_staff WHERE SID='$viewarr[staffid]'";
-                            $resultstaff = mysqli_query($connection,$sqlstaff) or die("sql error in sqlstaff");
-                            $rowstaff = mysqli_fetch_assoc($resultstaff);
+while($viewarr = mysqli_fetch_assoc($view)) {
+    if (isset($viewarr["startdate"]) && isset($viewarr["staffid"]) && isset($viewarr["schoolid"])) {
+        $workstart = $viewarr["startdate"];
+        $diff = strtotime($today) - strtotime($workstart);
+        $diffyears = floor($diff / (365*60*60*24));
+        
+        if($diffyears >= 5) {
+            $sqlstaff = "SELECT Name FROM school_staff WHERE SID='$viewarr[staffid]'";
+            $resultstaff = mysqli_query($connection,$sqlstaff) or die("sql error in sqlstaff");
+            $rowstaff = mysqli_fetch_assoc($resultstaff);
 
-                            $sqlschool = "SELECT censusid, name FROM school WHERE schoolid='$viewarr[schoolid]'";
-                            $resultschool = mysqli_query($connection,$sqlschool) or die("sql error in sqlschool");
-                            $rowschool = mysqli_fetch_assoc($resultschool);
-                            ?>
-                            <tr>
-                                <td class="fw-bold"><?php echo $x; ?></td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar-sm bg-light rounded-circle me-2 d-flex align-items-center justify-content-center">
-                                            <i class="fas fa-user text-primary"></i>
-                                        </div>
-                                        <div><?php echo htmlspecialchars($rowstaff["Name"]); ?></div>
-                                    </div>
-                                </td>
-                                <td><?php echo htmlspecialchars($rowschool["censusid"]); ?></td>
-                                <td><?php echo htmlspecialchars($rowschool["name"]); ?></td>
-                                <td>
-                                    <span class="badge bg-light text-dark">
-                                        <?php echo date("M d, Y", strtotime($viewarr["startdate"])); ?>
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="badge <?php echo $diffyears >= 7 ? 'bg-danger' : 'bg-warning'; ?>">
-                                        <?php echo $diffyears; ?> years
-                                    </span>
-                                </td>
-                                <td>
-                                    <a href="Transfer/index.php?id=<?php echo $ida; ?>&transtaffid=<?php echo base64_encode($viewarr["staffid"]); ?>" 
-                                       class="btn btn-sm btn-primary d-flex align-items-center">
-                                        <i class="fas fa-exchange-alt me-1"></i>
-                                        <span>Transfer</span>
-                                    </a>
-                                </td>
-                            </tr>
-                            <?php
-                            $x++;
-                        }
-                    }
+            $sqlschool = "SELECT censusid, name FROM school WHERE schoolid='$viewarr[schoolid]'";
+            $resultschool = mysqli_query($connection,$sqlschool) or die("sql error in sqlschool");
+            $rowschool = mysqli_fetch_assoc($resultschool);
+            ?>
+            <tr>
+                <td class="fw-bold"><?php echo $x; ?></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <div class="avatar-sm bg-light rounded-circle me-2 d-flex align-items-center justify-content-center">
+                            <i class="fas fa-user text-primary"></i>
+                        </div>
+                        <div><?php echo htmlspecialchars($rowstaff["Name"]); ?></div>
+                    </div>
+                </td>
+                <td><?php echo htmlspecialchars($rowschool["censusid"]); ?></td>
+                <td><?php echo htmlspecialchars($rowschool["name"]); ?></td>
+                <td>
+                    <span class="badge bg-light text-dark">
+                        <?php echo date("M d, Y", strtotime($viewarr["startdate"])); ?>
+                    </span>
+                </td>
+                <td>
+                    <span class="badge <?php echo $diffyears >= 7 ? 'bg-danger' : 'bg-warning'; ?>">
+                        <?php echo $diffyears; ?> years
+                    </span>
+                </td>
+                <td>
+                    <a href="Transfer/index.php?id=<?php echo $ida; ?>&transtaffid=<?php echo base64_encode($viewarr["staffid"]); ?>" 
+                       class="btn btn-sm btn-primary d-flex align-items-center">
+                        <i class="fas fa-exchange-alt me-1"></i>
+                        <span>Transfer</span>
+                    </a>
+                </td>
+            </tr>
+            <?php
+            $x++;
+        }
+    }
+}
                     ?>
                 </tbody>
             </table>

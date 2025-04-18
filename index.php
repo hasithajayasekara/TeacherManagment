@@ -1,4 +1,4 @@
-﻿<?php
+﻿﻿<?php
 include("config.php");
 if(!isset($_SESSION))
 {
@@ -355,7 +355,7 @@ else
             <ul id="menu" class="collapse">
 
                 
-                <li class="panel active">
+    <li class="panel active">
                     <a href="index.php" >
                         <i class="icon-table"></i> Home
                     </a>                   
@@ -366,20 +366,35 @@ else
 
 
 
+                <!--<li class="panel active">
+                    <a href="index.php" >
+                        <i class="icon-table"></i> Home
+                    </a>                   
+                </li>-->
+                <li>
+                    <a href="papers.html"></i>Past Papers</a>
+                </li>
+                
+                
+                <li>
+                    <a href="feedback.html"></i>Feedbacks </a>
+                </li>
+                
+
                 <?php
-				if($usertype=="guest")
-				{
-					include("menu.php");
-				}
-				else if($usertype=="zone")
-				{
-					include("zonemenu.php");
-				}
-				else if($usertype=="teach")
-				{
-					include("teachmenu.php");
-				}
-				?>
+                if($usertype=="guest")
+                {
+                    include("menu.php");
+                }
+                else if($usertype=="zone")
+                {
+                    include("zonemenu.php");
+                }
+                else if($usertype=="teach")
+                {
+                    include("teachmenu.php");
+                }
+                ?>
 
             </ul>
 

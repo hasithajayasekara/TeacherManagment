@@ -15,41 +15,71 @@ if (isset($_SESSION['usertype'])) {
 } else {
     $usertype = "guest";
 }
+
+// Custom function to generate unique seminarid
+function generateSeminarId($connection) {
+    $prefix = "SEM";
+    $defaultId = $prefix . "00001";
+
+    $sql = "SELECT seminarid FROM seminar ORDER BY seminarid DESC LIMIT 1";
+    $result = mysqli_query($connection, $sql) or die("Error in seminarid query: " . mysqli_error($connection));
+
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        $lastId = $row['seminarid'];
+
+        // Extract numeric part
+        $numPart = intval(substr($lastId, strlen($prefix)));
+
+        // Increment numeric part
+        $newNum = $numPart + 1;
+
+        // Format new ID with leading zeros
+        $newId = $prefix . str_pad($newNum, 5, "0", STR_PAD_LEFT);
+
+        // Check for duplicates and increment if necessary
+        while (true) {
+            $checkSql = "SELECT seminarid FROM seminar WHERE seminarid = '$newId'";
+            $checkResult = mysqli_query($connection, $checkSql) or die("Error in duplicate check: " . mysqli_error($connection));
+            if (mysqli_num_rows($checkResult) == 0) {
+                break;
+            }
+            $newNum++;
+            $newId = $prefix . str_pad($newNum, 5, "0", STR_PAD_LEFT);
+        }
+        return $newId;
+    } else {
+        return $defaultId;
+    }
+}
+
 if ($usertype == "zone" || $usertype == "clerk") {
     if (isset($_POST['btnsubmitadd'])) {
-        $sql1 = "SELECT seminarid FROM seminar ORDER BY seminarid DESC LIMIT 1";
-        $result1 = mysqli_query($connection, $sql1) or die("Error in sql1" . mysqli_error($connection));
-        
-        if (mysqli_num_rows($result1) > 0) {
-            $row1 = mysqli_fetch_assoc($result1);
-            $seminarid = ++$row1["seminarid"];
-        } else {
-            $seminarid = "SEM00001";
-        }
-        
+        $seminarid = generateSeminarId($connection);
+
         $sql2 = "INSERT INTO seminar (seminarid, date, details) VALUES (?, ?, ?)";
         $stmt = mysqli_prepare($connection, $sql2);
         mysqli_stmt_bind_param($stmt, "sss", $seminarid, $_POST['txtdate'], $_POST['txtdetails']);
         mysqli_stmt_execute($stmt);
-        
+
         $totalloop = $_POST['txtloop'];
-        
+
         for ($x = 1; $x <= $totalloop; $x++) {
             if ($_POST['txtstaffatten' . $x] == "Yes") {
                 $staffid = mysqli_real_escape_string($connection, $_POST['txtstaffid' . $x]);
-                
+
                 $sql3 = "INSERT INTO seminarparticipant (seminarid, staffid) VALUES (?, ?)";
                 $stmt2 = mysqli_prepare($connection, $sql3);
                 mysqli_stmt_bind_param($stmt2, "ss", $seminarid, $staffid);
                 mysqli_stmt_execute($stmt2);
-                
+
                 $emailQuery = "SELECT Email_Address FROM school_staff WHERE SID = '$staffid'";
                 $emailResult = mysqli_query($connection, $emailQuery);
                 if ($emailRow = mysqli_fetch_assoc($emailResult)) {
                     $to = $emailRow["Email_Address"];
                     $subject = "Seminar Invitation";
                     $message = "Dear Participant,\n\nYou have been selected for the seminar on " . $_POST['txtdate'] . ".\nDetails: " . $_POST['txtdetails'] . "\n\nBest Regards,\nYour Organization";
-                    
+
                     $mail = new PHPMailer(true);
                     try {
                         $mail->isSMTP();
@@ -59,12 +89,12 @@ if ($usertype == "zone" || $usertype == "clerk") {
                         $mail->Password = 'hcqw oosi vgul mkvh';
                         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                         $mail->Port = 587;
-                        
+
                         $mail->setFrom('your-email@example.com', 'Your Organization');
                         $mail->addAddress($to);
                         $mail->Subject = $subject;
                         $mail->Body = $message;
-                        
+
                         $mail->send();
                     } catch (Exception $e) {
                         error_log("Email could not be sent. Mailer Error: {$mail->ErrorInfo}");
@@ -72,7 +102,7 @@ if ($usertype == "zone" || $usertype == "clerk") {
                 }
             }
         }
-        
+    
         echo "<script>alert('Successfully Inserted into Database'); window.location.href='index.php';</script>";
     }
 }

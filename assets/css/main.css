@@ -213,10 +213,25 @@ body.padTop53 {
 
 #top .navbar-brand {
   padding: 0;
+  font-size: 60px;
+  font-weight: bold;
+  line-height: 50px;
+}
+
+#top .navbar-header {
+  font-size: 60px;
+  font-weight: bold;
+  padding: 0px 0px;
+}
+
+#top div {
+  font-size: 30px;
+  padding: 20px;
+  min-height: 60px;
 }
 
 #top .topnav {
-  margin: 10px 15px 10px auto;
+  margin: 0px 0px 0px auto;
 }
 
 @media (min-width: 768px) {
@@ -2563,3 +2578,7 @@ fieldset[disabled] .btn-grad.btn-metis-6.active {
 }
 
 /* END Pricing Table */
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 30px;
+}

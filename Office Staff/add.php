@@ -29,7 +29,7 @@ if ($usertype == "zone" || $usertype == "clerk") {
             'Post' => $_POST['txtpost']
         ];
         
-        $sql2 = "INSERT INTO school_staff (" . implode(", ", array_keys($fields)) . ") VALUES ('" . implode("', '", array_map('mysqli_real_escape_string', array_values($fields))) . "')";
+$sql2 = "INSERT INTO school_staff (" . implode(", ", array_keys($fields)) . ") VALUES ('" . implode("', '", array_map(function($value) use ($connection) { return mysqli_real_escape_string($connection, $value); }, array_values($fields))) . "')";
         mysqli_query($connection, $sql2) or die("Error in sql2" . mysqli_error($connection));
 
         $sql3 = "INSERT INTO staffwork (staffid, startdate, schoolid, post) VALUES ('$stfid', '{$_POST['txtapdate']}', '{$_POST['txtschool']}', '{$_POST['txtpost']}')";

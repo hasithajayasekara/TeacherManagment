@@ -21,83 +21,102 @@ if ($usertype == "zone" || $usertype == "clerk") {
   if (isset($_POST['btnsubmitadd'])) {
     $totalloop = (int)$_POST['txtloop'];
     $submit = 0;
-    $year = mysqli_real_escape_string($connection, $_POST['txtyear']);
-    $month = mysqli_real_escape_string($connection, $_POST['txtmonth']);
+    $year = $_POST['txtyear'];
+    $month = $_POST['txtmonth'];
 
-    // Check if salary already exists for this period
-    $checkSql = "SELECT COUNT(*) as count FROM salary WHERE year='$year' AND month='$month'";
-    $checkResult = mysqli_query($connection, $checkSql);
-    $checkRow = mysqli_fetch_assoc($checkResult);
-
-    if ($checkRow['count'] > 0) {
-      echo "<script>alert('Salary records already exist for $month $year!');</script>";
+    // Validate year and month
+    if (!preg_match('/^\d{4}$/', $year) || !preg_match('/^(January|February|March|April|May|June|July|August|September|October|November|December)$/', $month)) {
+      echo "<script>alert('Invalid year or month.');</script>";
     } else {
-      for ($x = 1; $x < $totalloop; $x++) {
-        $basicsalary = (float)$_POST['txtstaffbsalary' . $x];
+      // Check if salary already exists for this period using prepared statement
+      $checkSql = $connection->prepare("SELECT COUNT(*) as count FROM salary WHERE year=? AND month=?");
+      $checkSql->bind_param("ss", $year, $month);
+      $checkSql->execute();
+      $checkResult = $checkSql->get_result();
+      $checkRow = $checkResult->fetch_assoc();
 
-        if ($basicsalary > 0) {
-          $staffid = mysqli_real_escape_string($connection, $_POST['txtstaffid' . $x]);
-          $epf = ($basicsalary * 8) / 100;
-          $etf = ($basicsalary * 12) / 100;
+      if ($checkRow['count'] > 0) {
+        echo "<script>alert('Salary records already exist for $month $year!');</script>";
+      } else {
+        for ($x = 1; $x < $totalloop; $x++) {
+          $basicsalary = (float)$_POST['txtstaffbsalary' . $x];
 
-          $sql2 = "INSERT INTO salary(staffid, netsalary, year, month, epf, etf) VALUES (
-                        '$staffid',
-                        '$basicsalary',
-                        '$year',
-                        '$month',
-                        '$epf',
-                        '$etf')";
-          $result2 = mysqli_query($connection, $sql2) or die("Error in sql2: " . mysqli_error($connection));
+          if ($basicsalary > 0) {
+            $staffid = $_POST['txtstaffid' . $x];
+            $epf = ($basicsalary * 8) / 100;
+            $etf = ($basicsalary * 12) / 100;
 
-          if ($result2) {
-            // Get staff details for email
-            $emailQuery = "SELECT ss.Name, ss.Email_Address 
-                                      FROM school_staff ss 
-                                      WHERE ss.SID = '$staffid'";
-            $emailResult = mysqli_query($connection, $emailQuery);
+            // Insert salary using prepared statement
+            $sql2 = $connection->prepare("INSERT INTO salary(staffid, netsalary, year, month, epf, etf) VALUES (?, ?, ?, ?, ?, ?)");
+            $sql2->bind_param("sdssdd", $staffid, $basicsalary, $year, $month, $epf, $etf);
+            $result2 = $sql2->execute();
 
-            if ($emailResult && $emailRow = mysqli_fetch_assoc($emailResult)) {
-              $to = $emailRow["Email_Address"];
-              $staffName = $emailRow["Name"];
+            if ($result2) {
+              // Get staff details for email using prepared statement
+              $emailQuery = $connection->prepare("SELECT Name, Email_Address FROM school_staff WHERE SID = ?");
+              $emailQuery->bind_param("s", $staffid);
+              $emailQuery->execute();
+              $emailResult = $emailQuery->get_result();
 
-              $subject = "Salary Update Notification - $month $year";
-              $message = "Dear $staffName,\n\n";
-              $message .= "Your salary details for $month $year have been processed:\n\n";
-              $message .= "Basic Salary: " . number_format($basicsalary, 2) . "\n";
-              $message .= "EPF (8%): " . number_format($epf, 2) . "\n";
-              $message .= "ETF (12%): " . number_format($etf, 2) . "\n";
-              $message .= "Net Salary: " . number_format($basicsalary, 2) . "\n\n";
-              $message .= "Best Regards,\nSchool Management System";
+              if ($emailResult && $emailRow = $emailResult->fetch_assoc()) {
+                $to = $emailRow["Email_Address"];
+                $staffName = $emailRow["Name"];
 
-              $mail = new PHPMailer(true);
-              try {
-                $mail->isSMTP();
-                $mail->Host = 'smtp.gmail.com';
-                $mail->SMTPAuth = true;
-                $mail->Username = 'thisarasadesh4@gmail.com';
-                $mail->Password = 'your-app-password'; // Use app-specific password
-                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                $mail->Port = 587;
+                // Validate email address
+                if (filter_var($to, FILTER_VALIDATE_EMAIL)) {
+                  $subject = "Salary Update Notification - $month $year";
+                  $message = "Dear $staffName,\n\n";
+                  $message .= "Your salary details for $month $year have been processed:\n\n";
+                  $message .= "Basic Salary: " . number_format($basicsalary, 2) . "\n";
+                  $message .= "EPF (8%): " . number_format($epf, 2) . "\n";
+                  $message .= "ETF (12%): " . number_format($etf, 2) . "\n";
+                  $message .= "Net Salary: " . number_format($basicsalary, 2) . "\n\n";
+                  $message .= "Best Regards,\nSchool Management System";
 
-                $mail->setFrom('noreply@schoolsystem.com', 'School Management System');
-                $mail->addAddress($to, $staffName);
-                $mail->Subject = $subject;
-                $mail->Body = $message;
+                  $mail = new PHPMailer(true);
+                  try {
+                    $mail->isSMTP();
+                    $mail->Host = 'smtp.gmail.com';
+                    $mail->SMTPAuth = true;
+                    $mail->Username = 'thisarasadesh4@gmail.com';
 
-                $mail->send();
-              } catch (Exception $e) {
-                error_log("Email could not be sent to $staffName. Error: {$mail->ErrorInfo}");
+                    // Get SMTP app password from environment variable
+                    $smtpPassword = getenv('SMTP_APP_PASSWORD');
+                    if (!$smtpPassword || $smtpPassword === 'your-app-password') {
+                        // SMTP password not set properly, log error and notify user
+                        error_log("SMTP_APP_PASSWORD environment variable is not set or invalid.");
+                        echo "<script>alert('SMTP password is not configured properly. Please set SMTP_APP_PASSWORD environment variable.');</script>";
+                        // Optionally, for testing only, uncomment the next line and set your app password directly here (not recommended for production)
+                        // $smtpPassword = 'your_actual_app_password_here';
+                    }
+                    $mail->Password = $smtpPassword;
+
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                    $mail->Port = 587;
+
+                    $mail->setFrom('noreply@schoolsystem.com', 'School Management System');
+                    $mail->addAddress($to, $staffName);
+                    $mail->Subject = $subject;
+                    $mail->Body = $message;
+
+                    try {
+                        $mail->send();
+                    } catch (Exception $e) {
+                        error_log("Email could not be sent to $staffName. Error: {$mail->ErrorInfo}");
+                        echo "<script>alert('Email sending failed for $staffName.');</script>";
+                    }
+                }
               }
+              $submit++;
             }
-            $submit++;
           }
         }
-      }
 
-      if ($submit > 0) {
-        $_SESSION['success_message'] = "Salary records for $month $year added successfully!";
-        header("Location: index.php");
-        exit();
+        if ($submit > 0) {
+          $_SESSION['success_message'] = "Salary records for $month $year added successfully!";
+          header("Location: index.php");
+          exit();
+        }
       }
     }
   }
@@ -363,6 +382,4 @@ if ($usertype == "zone" || $usertype == "clerk") {
   </html>
 <?php
 } else {
-  header("location:../index.php");
-}
-?>
+  header("location:../index.php");}}

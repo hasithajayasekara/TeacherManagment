@@ -68,15 +68,19 @@ else
 						$viewwork = mysqli_query($connection,$sqlwork)or die("Error in sqlwork".mysqli_error($connection));
 						$viewarrwork = mysqli_fetch_assoc($viewwork);
 						
-						$sqlschool="SELECT name FROM school WHERE schoolid='$viewarrwork[schoolid]'";
-						
-						$resultsch=mysqli_query($connection,$sqlschool) or die("sql error in sqlschool ".mysqli_error($connection));
-						$rowsch=mysqli_fetch_assoc($resultsch);
-						echo '<tr>';
-							echo '<td>'.$rowsch["name"].'</td>';
-							echo '<td>'.$viewarrwork["startdate"].'</td>';
-							echo '<td>'.$viewarrwork["post"].'</td>';
-						echo '</tr>';
+						if ($viewarrwork !== null) {
+							$sqlschool="SELECT name FROM school WHERE schoolid='$viewarrwork[schoolid]'";
+							
+							$resultsch=mysqli_query($connection,$sqlschool) or die("sql error in sqlschool ".mysqli_error($connection));
+							$rowsch=mysqli_fetch_assoc($resultsch);
+							echo '<tr>';
+								echo '<td>'.$rowsch["name"].'</td>';
+								echo '<td>'.$viewarrwork["startdate"].'</td>';
+								echo '<td>'.$viewarrwork["post"].'</td>';
+							echo '</tr>';
+						} else {
+							echo '<tr><td colspan="3" style="text-align:center;">No current work record found</td></tr>';
+						}
 						?>
 					</table>
 				</td>
